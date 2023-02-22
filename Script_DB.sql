@@ -40,7 +40,8 @@ CREATE TABLE bed(
 );
 
 CREATE TABLE patient(
-    dpi VARCHAR(13) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    dpi VARCHAR(13) NOT NULL,
     name VARCHAR(20) NOT NULL,
     lastname VARCHAR(20) NOT NULL,
     birthdate DATE NOT NULL,
@@ -53,7 +54,8 @@ CREATE TABLE speciality(
 );
 
 CREATE TABLE doctor(
-    collegiateNumber VARCHAR(9) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    collegiateNumber VARCHAR(9) NOT NULL,
     user VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL,
     dpi VARCHAR(13) NOT NULL,
@@ -68,17 +70,17 @@ CREATE TABLE doctor(
 CREATE TABLE bedpatient(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     bed_id INTEGER NOT NULL,
-    patiend_dpi VARCHAR(13) NOT NULL,
+    patient_id INTEGER NOT NULL,
     reason TEXT NOT NULL,
     state BIT NOT NULL,
-    doctor_collegiateNumber VARCHAR(9) NOT NULL,
+    doctor_id INTEGER NOT NULL,
     annotations TEXT NULL,
     startDate DATE NOT NULL,
     endDate DATE NULL,
 
     FOREIGN KEY (bed_id) REFERENCES Bed(id),
-    FOREIGN KEY (patiend_dpi) REFERENCES Patient(dpi),
-    FOREIGN KEY (doctor_collegiateNumber) REFERENCES Doctor(collegiateNumber)
+    FOREIGN KEY (patient_id) REFERENCES Patient(id),
+    FOREIGN KEY (doctor_id) REFERENCES Doctor(id)
 );
 
 CREATE TABLE administrator(

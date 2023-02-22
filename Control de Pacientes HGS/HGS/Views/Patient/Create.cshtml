@@ -1,0 +1,50 @@
+﻿@model HGSModel.Patient
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="fs-3" style="background-color:aquamarine">Crear Paciente</div>
+<hr />
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Dpi" class="control-label"></label>
+            <input asp-for="Dpi" class="form-control" />
+            <span asp-validation-for="Dpi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Lastname" class="control-label"></label>
+            <input asp-for="Lastname" class="form-control" />
+            <span asp-validation-for="Lastname" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Birthdate" class="control-label"></label>
+            <input asp-for="Birthdate" class="form-control" />
+            <span asp-validation-for="Birthdate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Observations" class="control-label"></label>
+            <input asp-for="Observations" class="form-control" />
+            <span asp-validation-for="Observations" class="text-danger"></span>
+        </div>
+        <div class="form-group d-grid gap-2 mt-3">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>       
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

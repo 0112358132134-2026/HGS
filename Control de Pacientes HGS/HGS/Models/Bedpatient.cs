@@ -9,13 +9,13 @@ public partial class Bedpatient
 
     public int BedId { get; set; }
 
-    public string PatiendDpi { get; set; } = null!;
+    public int PatientId { get; set; }
 
     public string Reason { get; set; } = null!;
 
     public bool State { get; set; }
 
-    public string DoctorCollegiateNumber { get; set; } = null!;
+    public int DoctorId { get; set; }
 
     public string? Annotations { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Bedpatient
 
     public virtual Bed Bed { get; set; } = null!;
 
-    public virtual Doctor DoctorCollegiateNumberNavigation { get; set; } = null!;
+    public virtual Doctor Doctor { get; set; } = null!;
 
-    public virtual Patient PatiendDpiNavigation { get; set; } = null!;
+    public virtual Patient Patient { get; set; } = null!;
 }

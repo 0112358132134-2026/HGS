@@ -5,6 +5,8 @@ namespace HGS.Models;
 
 public partial class Doctor
 {
+    public int Id { get; set; }
+
     public string CollegiateNumber { get; set; } = null!;
 
     public string User { get; set; } = null!;

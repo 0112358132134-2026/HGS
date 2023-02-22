@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using HGSModel;
 
 namespace HGS.Models;
 
@@ -33,7 +34,7 @@ public partial class HgsContext : DbContext
 
     public virtual DbSet<Speciality> Specialities { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
 
@@ -143,24 +144,20 @@ public partial class HgsContext : DbContext
 
             entity.HasIndex(e => e.BedId, "bed_id");
 
-            entity.HasIndex(e => e.DoctorCollegiateNumber, "doctor_collegiateNumber");
+            entity.HasIndex(e => e.DoctorId, "doctor_id");
 
-            entity.HasIndex(e => e.PatiendDpi, "patiend_dpi");
+            entity.HasIndex(e => e.PatientId, "patient_id");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Annotations)
                 .HasColumnType("text")
                 .HasColumnName("annotations");
             entity.Property(e => e.BedId).HasColumnName("bed_id");
-            entity.Property(e => e.DoctorCollegiateNumber)
-                .HasMaxLength(9)
-                .HasColumnName("doctor_collegiateNumber");
+            entity.Property(e => e.DoctorId).HasColumnName("doctor_id");
             entity.Property(e => e.EndDate)
                 .HasColumnType("date")
                 .HasColumnName("endDate");
-            entity.Property(e => e.PatiendDpi)
-                .HasMaxLength(13)
-                .HasColumnName("patiend_dpi");
+            entity.Property(e => e.PatientId).HasColumnName("patient_id");
             entity.Property(e => e.Reason)
                 .HasColumnType("text")
                 .HasColumnName("reason");
@@ -174,13 +171,13 @@ public partial class HgsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("bedpatient_ibfk_1");
 
-            entity.HasOne(d => d.DoctorCollegiateNumberNavigation).WithMany(p => p.Bedpatients)
-                .HasForeignKey(d => d.DoctorCollegiateNumber)
+            entity.HasOne(d => d.Doctor).WithMany(p => p.Bedpatients)
+                .HasForeignKey(d => d.DoctorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("bedpatient_ibfk_3");
 
-            entity.HasOne(d => d.PatiendDpiNavigation).WithMany(p => p.Bedpatients)
-                .HasForeignKey(d => d.PatiendDpi)
+            entity.HasOne(d => d.Patient).WithMany(p => p.Bedpatients)
+                .HasForeignKey(d => d.PatientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("bedpatient_ibfk_2");
         });
@@ -199,18 +196,19 @@ public partial class HgsContext : DbContext
 
         modelBuilder.Entity<Doctor>(entity =>
         {
-            entity.HasKey(e => e.CollegiateNumber).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("doctor");
 
             entity.HasIndex(e => e.SpecialtyId, "specialty_id");
 
-            entity.Property(e => e.CollegiateNumber)
-                .HasMaxLength(9)
-                .HasColumnName("collegiateNumber");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Birthdate)
                 .HasColumnType("date")
                 .HasColumnName("birthdate");
+            entity.Property(e => e.CollegiateNumber)
+                .HasMaxLength(9)
+                .HasColumnName("collegiateNumber");
             entity.Property(e => e.Dpi)
                 .HasMaxLength(13)
                 .HasColumnName("dpi");
@@ -236,16 +234,17 @@ public partial class HgsContext : DbContext
 
         modelBuilder.Entity<Patient>(entity =>
         {
-            entity.HasKey(e => e.Dpi).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("patient");
 
-            entity.Property(e => e.Dpi)
-                .HasMaxLength(13)
-                .HasColumnName("dpi");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Birthdate)
                 .HasColumnType("date")
                 .HasColumnName("birthdate");
+            entity.Property(e => e.Dpi)
+                .HasMaxLength(13)
+                .HasColumnName("dpi");
             entity.Property(e => e.Lastname)
                 .HasMaxLength(20)
                 .HasColumnName("lastname");
@@ -273,4 +272,6 @@ public partial class HgsContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<HGSModel.Patient> Patient { get; set; } = default!;
 }
