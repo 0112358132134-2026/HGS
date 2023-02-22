@@ -9,18 +9,18 @@ CREATE SCHEMA HGS DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 -------------------------------------
 --TABLES CREATION
 -------------------------------------
-CREATE TABLE Area(
+CREATE TABLE area(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Branch (
+CREATE TABLE branch(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     municipality VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE AreaSucursal(
+CREATE TABLE areasucursal(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     area_id INTEGER NOT NULL,
     branch_id INTEGER NOT NULL,    
@@ -29,7 +29,7 @@ CREATE TABLE AreaSucursal(
     FOREIGN KEY (branch_id) REFERENCES Branch(id)
 );
 
-CREATE TABLE Bed(
+CREATE TABLE bed(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     areaSucursal_id INTEGER NOT NULL,
     size VARCHAR(15) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE Bed(
     FOREIGN KEY (areaSucursal_id) REFERENCES AreaSucursal(id)
 );
 
-CREATE TABLE Patient(
+CREATE TABLE patient(
     dpi VARCHAR(13) PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
     lastname VARCHAR(20) NOT NULL,
@@ -47,12 +47,12 @@ CREATE TABLE Patient(
     observations TEXT NULL
 );
 ---------------------
-CREATE TABLE Speciality(
+CREATE TABLE speciality(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(60) NOT NULL
 );
 
-CREATE TABLE DOCTOR(
+CREATE TABLE doctor(
     collegiateNumber VARCHAR(9) PRIMARY KEY,
     user VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE DOCTOR(
     FOREIGN KEY (specialty_id) REFERENCES Speciality(id)
 );
 ---------------------
-CREATE TABLE BedPatient(
+CREATE TABLE bedpatient(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     bed_id INTEGER NOT NULL,
     patiend_dpi VARCHAR(13) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE BedPatient(
     FOREIGN KEY (doctor_collegiateNumber) REFERENCES Doctor(collegiateNumber)
 );
 
-CREATE TABLE Administrator(
+CREATE TABLE administrator(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     user VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL
