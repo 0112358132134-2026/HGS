@@ -1,20 +1,20 @@
 ﻿@model HGSModel.Patient
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<div class="title">AÑADIR PACIENTE</div>
+<div class="title">EDITAR PACIENTE</div>
 
 <div class="row">
-
     <div class="col" style="display:flex;align-items:center;justify-content:center;">
         <div class="data">
-            <form asp-action="Create">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
                 <div class="form-group">
                     <label asp-for="Dpi" class="control-label">DPI</label>
-                    <input asp-for="Dpi" placeholder="Ingrese DPI del paciente" class="form-control" />
+                    <input asp-for="Dpi" readonly placeholder="Ingrese DPI del paciente" class="form-control" />
                     <span asp-validation-for="Dpi" class="warning-message"></span>
                 </div>
                 <div class="form-group mt-3">
@@ -33,72 +33,63 @@
                     <span asp-validation-for="Birthdate" class="warning-message"></span>
                 </div>
                 <div class="form-group mt-3">
-                    <label asp-for="Observations" class="control-label">OBSERVACIONES</label>
+                    <label asp-for="Observations" class="control-label">OBERVACIONES</label>
                     <input asp-for="Observations" placeholder="Añada alguna observación del paciente" class="form-control" />
-                    <span asp-validation-for="Observations" class="warning-message">@ViewData["Resultado"]</span>
+                    <span asp-validation-for="Observations" class="warning-message"></span>
                 </div>
                 <div class="form-group d-grid gap-2 mt-3">
-                    <input type="submit" value="Añadir Paciente" class="btn btn-light" />
+                    <input type="submit" value="Guardar cambios" class="btn btn-light" />
                 </div>
             </form>
-        </div>
+        </div>       
     </div>
-
-    <di class="col" style="display:flex;align-items:center;justify-content:center;padding: 30px;">
-        <div class="information">Acá puede agregar un paciente al sistema. Si desea consultar
-            que el paciente ya ha sido ingresado al sistema, puede buscarlo en la sección de
-            "buscar paciente"
-        </div>
-    </di>
-   
 </div>
 
 <style type="text/css">
-    .title{        
-        padding: 20px;      
+    .title {
+        padding: 20px;
         text-align: center;
         font-size: 40px;
         font-weight: bold;
         border-bottom: 5px solid #000;
     }
-    .control-label{
+    .control-label {
         color: #FFF;
-        font-weight:bold;
+        font-weight: bold;
     }
-    .form-control{
+    .form-control {
         border: none;
-        border-bottom: 2px solid #FFF;               
+        border-bottom: 2px solid #FFF;
         border-radius: 0px;
         background: transparent;
-        color: #FFF;        
+        color: #FFF;
+    }
+    .form-control:read-only{
+        background: transparent;
+        color: #000;
     }
     .form-control::placeholder {
-        color : #FFF;
-    }    
-    .form-control:focus{
-        background: transparent;        
-        color: #FFF;              
-    }           
-    .data{
-        width:550px;
-        padding:50px;
-        margin-top: 40px;        
-        margin-bottom: 40px;               
-        background-color: #b80f22;       
-    }    
-    .information{
-        padding: 30px;
-        text-align:justify;
-        font-size:30px;        
-    }   
+       color: #FFF;
+    }
+    .form-control:focus {
+       background: transparent;
+       color: #FFF;
+    }
+    .data {
+        width: 550px;
+        padding: 50px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        background-color: #FE903F;
+    }
     .warning-message {
-        color:#000;
+        color: #000;
     }
     .col {
         border-bottom: 5px solid #000;
-    }  
-    .return {
-        text-decoration: none;
+    }
+    .return{
+        text-decoration:none;
         font-size: 20px;
         font-weight: bold;
         margin: 5px;

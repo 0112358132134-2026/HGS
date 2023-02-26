@@ -1,0 +1,132 @@
+﻿@model IEnumerable<HGSModel.Patient>
+
+@{
+    ViewData["Title"] = "Listado de Pacientes";
+}
+
+<div style="display:flex;">
+    <div class="title">LISTADO DE PACIENTES</div>
+    <div style="margin:20px; background-color: greenyellow; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>   
+</div>
+
+<form asp-controller="Patient" asp-action="List" method="get" class="search">
+    <div class="toCenter">
+        <select name="optionSearch" id="optionSearch">
+            <option value="dpi">DPI</option>
+            <option value="name">Nombre</option>
+            <option value="lastname">Apellido</option>
+        </select>
+    </div>
+    <div class="toCenter">
+        <input type="text" placeholder="Ingrese un valor para buscar" name="toSearch" class="toSearch" />
+    </div>
+    <div class="toCenter">
+        <input type="submit" value="BUSCAR" class="btn btn-sm btn-light" />
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr class="table-danger">
+            <th>
+                DPI
+            </th>
+            <th>
+                NOMBRE
+            </th>
+            <th>
+                APELLIDO
+            </th>
+            <th>
+                FECHA DE NACIMIENTO
+            </th>
+            <th>
+                OBSERVACIONES
+            </th>
+            <th>
+                OPCIONES
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dpi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observations)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<style type="text/css">
+    .title{
+        background: #b80f22;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 10px;
+        font-size: 30px; 
+        font-weight: bold;
+        color: #FFF;
+        width: 400px;
+        text-align: center;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .add{                         
+        font-size: 50px;
+        font-weight: bold;         
+        text-decoration: none;
+        color: #000;
+    }
+    .add:hover{
+        color: #FFF;
+    }
+    .search{
+        display:flex;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        align-content:space-between;
+        background-color: #000;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .toSearch{        
+        border: none;
+        border-bottom: 2px solid #FFF;
+        border-radius: 0px;
+        background: transparent;
+        color: #FFF;
+        width: 300px;
+    }
+    .toSearch::placeholder{
+            color: #FFF;
+    }
+    .toCenter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;                
+    }
+</style>                

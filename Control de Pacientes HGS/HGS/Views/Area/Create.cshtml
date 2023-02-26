@@ -1,0 +1,104 @@
+﻿@model HGSModel.Area
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="title">AÑADIR ÁREA</div>
+
+<div class="row">
+
+    <div class="col" style="display:flex;align-items:center;justify-content:center;">
+        <div class="data">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">NOMBRE</label>
+                    <input asp-for="Name" placeholder="Ingrese el nombre del área" class="form-control" />
+                    <span asp-validation-for="Name" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Description" class="control-label">DESCRIPCIÓN</label>
+                    <input asp-for="Description" placeholder="Ingrese una breve descripción del área" class="form-control" />
+                    <span asp-validation-for="Description" class="warning-message">@ViewData["Resultado"]</span>
+                </div>
+                <div class="form-group d-grid gap-2 mt-3">
+                    <input type="submit" value="Añadir Área" class="btn btn-light" />
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+    <div class="col" style="display:flex;align-items:center;justify-content:center;padding: 30px;">
+        <div class="information">
+            Añade el área del hospital HGS que deseas agregar
+            al sistema. Puedes consultar cuáles áreas ya existen, en la
+            sección de "ver áreas".
+        </div>
+    </div>
+
+</div>
+
+<style type="text/css">
+    .title {
+        padding: 20px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+        border-bottom: 5px solid #000;
+        text-transform: uppercase;
+    }
+    .control-label {
+        color: #FFF;
+        font-weight: bold;
+    }
+    .form-control {
+        border: none;
+        border-bottom: 2px solid #FFF;
+        border-radius: 0px;
+        background: transparent;
+        color: #FFF;
+    }
+    .form-control::placeholder {
+        color: #FFF;
+    }
+
+    .form-control:focus {
+        background: transparent;
+        color: #FFF;
+    }
+    .data {
+        width: 450px;
+        padding: 50px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        background-color: #b80f22;
+    }
+    .information {
+        font-size: 20px;
+        padding: 30px;
+        text-align: justify;
+        border-bottom: 1px solid #000;
+    }
+    .warning-message {
+        color: #000;
+    }
+    .col {
+        border-bottom: 5px solid #000;
+    }    
+    .return {
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 5px;
+    }
+</style>
+
+<div style="padding: 30px;">
+    <a asp-action="List" class="return">< REGRESAR</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

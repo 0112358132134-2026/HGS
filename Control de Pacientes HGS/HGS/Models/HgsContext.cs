@@ -274,4 +274,8 @@ public partial class HgsContext : DbContext
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
     public DbSet<HGSModel.Patient> Patient { get; set; } = default!;
+
+    public DbSet<HGSModel.Branch> Branch { get; set; } = default!;
+
+    public DbSet<HGSModel.Area> Area { get; set; } = default!;
 }

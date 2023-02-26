@@ -20,4 +20,8 @@
     <ProjectReference Include="..\HGSModel\HGSModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
