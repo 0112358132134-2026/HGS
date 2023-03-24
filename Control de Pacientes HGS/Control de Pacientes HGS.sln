@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HGSAPI", "HGSAPI\HGSAPI.csproj", "{4A39C290-77C8-4120-81FF-28432D822FFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{AD2B45FE-AD46-4F72-AE70-3A14288B4E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD2B45FE-AD46-4F72-AE70-3A14288B4E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD2B45FE-AD46-4F72-AE70-3A14288B4E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A39C290-77C8-4120-81FF-28432D822FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A39C290-77C8-4120-81FF-28432D822FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A39C290-77C8-4120-81FF-28432D822FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A39C290-77C8-4120-81FF-28432D822FFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

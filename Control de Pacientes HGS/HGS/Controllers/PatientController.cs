@@ -16,19 +16,19 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> List(string tosearch, string optionSearch)
         {
-            IEnumerable<Patient> patients = await _context.Patients.ToListAsync();           
+            IEnumerable<Patient> patients = await Functions.APIService.PatientGetList();
 
-            if (!String.IsNullOrEmpty(tosearch))
+            if (tosearch != "")
             {
                 switch (optionSearch)
                 {
-                    case "dpi":
+                    case "DPI":
                         patients = patients.Where(s => s.Dpi.ToLower().Contains(tosearch.ToLower()));
                         break;
-                    case "name":
+                    case "NAME":
                         patients = patients.Where(s => s.Name.ToLower().Contains(tosearch.ToLower()));
                         break;
-                    case "lastname":
+                    case "LASTNAME":
                         patients = patients.Where(s => s.Lastname.ToLower().Contains(tosearch.ToLower()));
                         break;                    
                 }
