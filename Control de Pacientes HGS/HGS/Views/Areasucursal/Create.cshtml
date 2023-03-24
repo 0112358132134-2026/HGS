@@ -1,0 +1,128 @@
+﻿@model HGS.Models.Areasucursal
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="title">ASOCIAR UN ÁREA A UNA SUCURSAL</div>
+
+<div class="row">
+    <div class="col" style="display:flex;align-items:center;justify-content:center;">
+        <div class="data">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="AreaId" class="control-label">ÁREA</label>
+                    <select asp-for="AreaId" class ="select" asp-items="ViewBag.AreaId"></select>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="BranchId" class="control-label">SUCURSAL</label>
+                    <select asp-for="BranchId" class ="select" asp-items="ViewBag.BranchId"></select>
+                </div>
+                <div class="form-group d-grid gap-2 mt-3">
+                    <input type="submit" value="Añadir Areasucrusal" class="btn btn-light" />
+                </div>
+            </form>
+        </div>        
+    </div>
+
+    <div class="col" style="display:flex; flex-direction:column; align-items:center;justify-content:center;padding: 30px;">
+        <div class="information">
+            Una sucursal puede tener diferentes áreas. Acá puedes añadir las áreas que deseas
+            a una sucrusal en específico.
+        </div>@*
+        <div>
+            <a asp-action="List">
+                <input type="submit" value="Regresar" class="btn btn-dark" style="width:200px;" />
+            </a>
+        </div>*@
+    </div>
+</div>
+
+@if (@ViewData["Result"] != null)
+{
+    @if (@ViewData["Result"].ToString().Equals("OK"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('OK', '¡Áreasucursal ingresada existosamente!', 'success');
+            }
+        </script>
+    }
+    else if(@ViewData["Result"].ToString().Equals("Error"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', '¡Esta áreasucursal ya ha sido ingresada!', 'error');
+            }
+        </script>
+    }
+    else if (@ViewData["Result"].ToString().Equals("noAreas"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Advertencia', 'Aún no se han ingresado áreas al sistema', 'info');
+            }
+        </script>
+    }
+    else if (@ViewData["Result"].ToString().Equals("noBranches"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Advertencia', 'Aún no se han ingresado municipios al sistema', 'info');
+            }
+        </script>
+    }
+    else if (@ViewData["Result"].ToString().Equals("noData"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Advertencia', 'Aún no se ha ingresado ningún área ni ningún municipio al sistema', 'info');
+            }
+        </script>
+    }
+}
+
+<style type="text/css">
+    .title {
+        padding: 20px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+        border-bottom: 5px solid #000;
+    }
+    .control-label {
+        color: #FFF;
+        font-weight: bold;
+    }
+    .select {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
+        border: none;
+        text-transform: capitalize;
+        color: #fff;
+        background: #292929;
+        text-align: center;       
+    }
+    .data {
+        width: 450px;
+        padding: 50px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        background-color: #b80f22;
+    }
+    .information {
+        font-size: 30px;
+        padding: 30px;
+        text-align: justify;
+    }
+    .col {
+        border-bottom: 5px solid #000;
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

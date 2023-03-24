@@ -1,7 +1,7 @@
-﻿@model HGSModel.Patient
+﻿@model HGS.Models.Patient
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
 <div class="title">DETALLES DEL PACIENTE</div>
@@ -41,22 +41,18 @@
         </dd>
     </dl>
 </div>
+
 <hr />
 
 <div>
-    <a asp-action="list" class="return">< Regresar</a> |    
+    <a asp-action="List">
+        <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+    </a>
 </div>
 
 <style type="text/css">
-    .title{
-        padding: 10px;
+    .title{         
         font-size: 30px;
         font-weight: bold;
     }
-    .return {
-        text-decoration: none;
-        font-size: 20px;
-        font-weight: bold;
-        margin: 5px;
-    }    
 </style>

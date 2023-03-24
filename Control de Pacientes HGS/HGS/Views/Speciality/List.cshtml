@@ -1,11 +1,11 @@
-﻿@model IEnumerable<HGS.Models.Area>
+﻿@model IEnumerable<HGS.Models.Speciality>
 
 @{
-    ViewData["Title"] = "Listado de Áreas";
+    ViewData["Title"] = "Listado de especialidades";
 }
 
 <div style="display:flex;">
-    <div class="title">LISTADO DE ÁREAS</div>
+    <div class="title">LISTADO DE ESPECIALIDADES</div>
     <div style="margin:20px; background-color: #000; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>
 </div>
 
@@ -14,9 +14,6 @@
         <tr class="table-danger">
             <th>
                 NOMBRE
-            </th>
-            <th>
-                DESCRIPCIÓN
             </th>
             <th>                
             </th>
@@ -29,10 +26,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
+                <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
             </td>
         </tr>
 }
@@ -48,8 +42,8 @@
         font-size: 30px;
         font-weight: bold;
         color: #FFF;
-        width: 400px;
-        text-align: center;
+        width: 600px;
+        text-align: center;        
         display: flex;
         align-items: center;
         justify-content: center;

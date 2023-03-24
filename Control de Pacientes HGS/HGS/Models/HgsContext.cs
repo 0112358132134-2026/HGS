@@ -278,4 +278,10 @@ public partial class HgsContext : DbContext
     public DbSet<HGSModel.Branch> Branch { get; set; } = default!;
 
     public DbSet<HGSModel.Area> Area { get; set; } = default!;
+
+    public DbSet<HGSModel.Speciality> Speciality { get; set; } = default!;
+
+    public DbSet<HGSModel.Doctor> Doctor { get; set; } = default!;
+
+    public DbSet<HGSModel.Areasucursal> Areasucursal { get; set; } = default!;
 }

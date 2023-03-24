@@ -1,7 +1,7 @@
-﻿@model HGSModel.Patient
+﻿@model HGS.Models.Patient
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
 <div class="title">EDITAR PACIENTE</div>
@@ -45,6 +45,24 @@
     </div>
 </div>
 
+<div style="padding: 30px;">
+    <a asp-action="List">
+        <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+    </a>
+</div>
+
+@if (@ViewData["Result"] != null)
+{
+    @if (@ViewData["Result"].ToString().Equals("OK"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('OK', '¡Paciente modificado existosamente!', 'success');
+            }
+        </script>
+    }    
+}
+
 <style type="text/css">
     .title {
         padding: 20px;
@@ -87,18 +105,8 @@
     }
     .col {
         border-bottom: 5px solid #000;
-    }
-    .return{
-        text-decoration:none;
-        font-size: 20px;
-        font-weight: bold;
-        margin: 5px;
-    }
+    }    
 </style>
-
-<div style="padding: 30px;">
-    <a asp-action="List" class="return">< REGRESAR</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

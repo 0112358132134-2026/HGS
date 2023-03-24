@@ -1,0 +1,137 @@
+﻿@model HGSModel.Doctor
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="title">AÑADIR DOCTOR</div>
+
+<div class="row">
+    <div class="col" style="display:flex;align-items:center;justify-content:center;">
+        <div class="data">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CollegiateNumber" class="control-label">NÚMERO DE COLEGIADO</label>
+                    <input asp-for="CollegiateNumber" placeholder="Ingrese número de colegiado del doctor" class="form-control" />
+                    <span asp-validation-for="CollegiateNumber" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="User" class="control-label">USUARIO</label>
+                    <input asp-for="User" placeholder="Ingrese nombre de usuario del doctor" class="form-control" />
+                    <span asp-validation-for="User" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Password" class="control-label">CONTRASEÑA</label>
+                    <input asp-for="Password" placeholder="Ingrese contraseña del doctor" class="form-control" />
+                    <span asp-validation-for="Password" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Dpi" class="control-label">DPI</label>
+                    <input asp-for="Dpi" placeholder="Ingrese DPI del doctor" class="form-control" />
+                    <span asp-validation-for="Dpi" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Name" class="control-label">NOMBRE</label>
+                    <input asp-for="Name" placeholder="Ingrese nombre del doctor" class="form-control" />
+                    <span asp-validation-for="Name" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Lastname" class="control-label">APELLIDO</label>
+                    <input asp-for="Lastname" placeholder="Ingrese apellido del doctor" class="form-control" />
+                    <span asp-validation-for="Lastname" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Birthdate" class="control-label">FECHA DE NACIMIENTO</label>
+                    <input asp-for="Birthdate" class="form-control" />
+                    <span asp-validation-for="Birthdate" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="SpecialtyId" class="control-label">ESPECIALIDAD</label>
+                    <select asp-for="SpecialtyId" class="select" asp-items="ViewBag.SpecialtyId"></select>
+                </div>
+                <div class="form-group d-grid gap-2 mt-3">
+                    <input type="submit" value="Añadir Doctor" class="btn btn-light" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col" style="display:flex; flex-direction:column; align-items:center;justify-content:center;padding: 30px;">
+        <div class="information">
+            Acá puede agregar un paciente al sistema. En el espacio de
+            "observaciones" puedes añadir algún aspecto que se considere relevante conocer acerca
+            del paciente (Ej. Padece de dolores de cabeza, hipertensión). Si deseas saber si el paciente ya está
+            en el sistema, puedes dar click en el botón "Regresar".
+
+        </div>
+        @*<div>
+            <a asp-action="List">
+                <input type="submit" value="Regresar" class="btn btn-dark" style="width:200px;" />
+            </a>
+        </div>*@
+    </div>
+
+</div>
+
+<style type="text/css">
+    .title {
+        padding: 20px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+        border-bottom: 5px solid #000;
+    }
+    .control-label {
+        color: #FFF;
+        font-weight: bold;
+    }
+    .form-control {
+        border: none;
+        border-bottom: 2px solid #FFF;
+        border-radius: 0px;
+        background: transparent;
+        color: #FFF;
+    }
+    .form-control::placeholder {
+            color: #FFF;
+    }
+    .form-control:focus {
+        background: transparent;
+        color: #FFF;
+    }
+    .select{
+        display: flex;
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
+        border: none;
+        text-transform: capitalize;
+        color: #fff;
+        background: #292929;
+        text-align: center;
+    }
+    .data {
+        width: 550px;
+        padding: 50px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        background-color: #b80f22;
+    }
+    .information {
+        padding: 30px;
+        text-align: justify;
+        font-size: 25px;
+    }
+    .warning-message {
+        color: #000;
+    }
+    .col {
+        border-bottom: 5px solid #000;
+    }
+</style>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

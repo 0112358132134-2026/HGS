@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HGSModel.Branch>
+﻿@model IEnumerable<HGS.Models.Branch>
 
 @{
     ViewData["Title"] = "Listado de Municipios";
@@ -6,7 +6,7 @@
 
 <div style="display:flex;">
     <div class="title">LISTADO DE MUNICIPIOS</div>
-    <div style="margin:20px; background-color: greenyellow; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>
+    <div style="margin:20px; background-color: #000; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>
 </div>
 
 <table class="table table-striped">
@@ -15,8 +15,7 @@
             <th>
                 MUNICIPIO
             </th>
-            <th>
-                OPCIONES
+            <th>                
             </th>
         </tr>
     </thead>
@@ -27,7 +26,7 @@
                 @Html.DisplayFor(modelItem => item.Municipality)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>                            
+                    <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
             </td>
         </tr>
 }
@@ -39,14 +38,12 @@
         background: #b80f22;
         padding: 10px;
         margin-top: 20px;
-        margin-bottom: 20px;
-        margin-left: 10px;
+        margin-bottom: 20px;        
         font-size: 30px;
         font-weight: bold;
         color: #FFF;
         width: 400px;
         text-align: center;
-        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -56,9 +53,9 @@
         font-size: 50px;
         font-weight: bold;
         text-decoration: none;
-        color: #000;
+        color: #FFF;
     }
     .add:hover {
-        color: #FFF;
+        color: #b80f22;
     }
 </style>  

@@ -1,40 +1,32 @@
-﻿@model HGS.Models.Area
+﻿@model HGS.Models.Speciality
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<div class="title">AÑADIR ÁREA</div>
+<div class="title">AÑADIR ESPECIALIDAD</div>
 
 <div class="row">
-
-    <div class="col" style="display:flex;align-items:center;justify-content:center;">
+    <div class ="col" style="display:flex;align-items:center;justify-content:center;">
         <div class="data">
             <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label">NOMBRE</label>
-                    <input asp-for="Name" placeholder="Ingrese el nombre del área" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">NOMBRE</label>
+                    <input asp-for="Name" placeholder="Ingrese el nombre de la especialidad" class="form-control" />
                     <span asp-validation-for="Name" class="warning-message"></span>
-                </div>
-                <div class="form-group mt-3">
-                    <label asp-for="Description" class="control-label">DESCRIPCIÓN</label>
-                    <input asp-for="Description" placeholder="Ingrese una breve descripción del área" class="form-control" />
-                    <span asp-validation-for="Description" class="warning-message"></span>
-                </div>
-                <div class="form-group d-grid gap-2 mt-3">
-                    <input type="submit" value="Añadir Área" class="btn btn-light" />
-                </div>
-            </form>
-        </div>
-        
+            </div>
+            <div class="form-group d-grid gap-2 mt-3">
+                <input type="submit" value="Añadir especialidad" class="btn btn-light" />
+            </div>
+        </form>
+        </div>         
     </div>
 
     <div class="col" style="display:flex; flex-direction:column; align-items:center;justify-content:center;padding: 30px;">
         <div class="information">
-            Las Áreas en el hospital HGS son lugares en donde se atienden a pacientes
-            en diferentes estados de salud. Si deseas saber si el área ya está
-            en el sistema, puedes dar click en el botón "Regresar".
+            Una especialidad, es aquella área en donde un Doctor/a tiene más habilidad, que en otras.
+            Si deseas saber si la especialidad ya está en el sistema, puedes dar click en el botón "Regresar".
         </div>
         <div>
             <a asp-action="List">
@@ -45,24 +37,24 @@
 
 </div>
 
-
 @if (@ViewData["Result"] != null)
-{
+{    
     @if (@ViewData["Result"].ToString().Equals("OK"))
-    {
+    {   
         <script>
             function Error() {
-                Swal.fire('Éxito', '¡Área ingresada existosamente!', 'success');
+                Swal.fire('Éxito','¡Especialidad ingresado existosamente!','success');
             }
         </script>
+                
     }
     else
-    {
+    {             
         <script>
             function Error() {
-                Swal.fire('Error', '¡Esta área ya ha sido ingresado!', 'error');
+                Swal.fire('Error','¡Esta especialidad ya ha sido ingresada!','error');
             }
-        </script>
+        </script>        
     }
 }
 
@@ -72,7 +64,7 @@
         text-align: center;
         font-size: 40px;
         font-weight: bold;
-        border-bottom: 5px solid #000;        
+        border-bottom: 5px solid #000;
     }
     .control-label {
         color: #FFF;
@@ -102,14 +94,14 @@
     .information {
         font-size: 25px;
         padding: 30px;
-        text-align: justify;        
+        text-align: justify;
     }
     .warning-message {
         color: #000;
     }
     .col {
         border-bottom: 5px solid #000;
-    } 
+    }
 </style>
 
 @section Scripts {

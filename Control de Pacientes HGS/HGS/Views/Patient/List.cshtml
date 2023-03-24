@@ -1,29 +1,51 @@
-﻿@model IEnumerable<HGSModel.Patient>
+﻿@model IEnumerable<HGS.Models.Patient>
 
 @{
-    ViewData["Title"] = "Listado de Pacientes";
+    ViewData["Title"] = "Pacientes";
 }
 
-<div style="display:flex;">
-    <div class="title">LISTADO DE PACIENTES</div>
-    <div style="margin:20px; background-color: greenyellow; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>   
-</div>
 
-<form asp-controller="Patient" asp-action="List" method="get" class="search">
-    <div class="toCenter">
-        <select name="optionSearch" id="optionSearch">
-            <option value="dpi">DPI</option>
-            <option value="name">Nombre</option>
-            <option value="lastname">Apellido</option>
-        </select>
+<div style="display:flex; flex-direction:column;">
+
+    <div class="title">
+        PACIENTES
     </div>
-    <div class="toCenter">
-        <input type="text" placeholder="Ingrese un valor para buscar" name="toSearch" class="toSearch" />
-    </div>
-    <div class="toCenter">
-        <input type="submit" value="BUSCAR" class="btn btn-sm btn-light" />
-    </div>
-</form>
+
+    <div style="display:flex; margin-bottom: 20px;">
+
+        <div class="addBox">
+            <a asp-action="Create" class="add">+</a>
+        </div>
+
+        <div class="textAdd">
+            &larr; Añadir paciente
+        </div>
+
+        <div style="width:100%; margin-left: 10px;">
+            <form asp-controller="Patient" asp-action="List" method="get" class="searchBar">
+
+                <div>
+                    <input type="text" placeholder="Ingrese un valor para buscar por:" name="toSearch" class="toSearch" />
+                </div>
+
+                <div>
+                    <select name="optionSearch" id="optionSearch" class="select">
+                        <option value="dpi">DPI</option>
+                        <option value="name">Nombre</option>
+                        <option value="lastname">Apellido</option>
+                    </select>
+                </div>
+
+                <div>
+                    <input type="submit" value="Buscar" class="btn btn-sm btn-dark" style="width:100px;" />
+                </div>
+
+            </form>
+        </div>
+
+    </div>    
+
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -32,19 +54,18 @@
                 DPI
             </th>
             <th>
-                NOMBRE
+                Nombre
             </th>
             <th>
-                APELLIDO
+                Apellido
             </th>
             <th>
-                FECHA DE NACIMIENTO
+                Fecha de nacimiento
             </th>
             <th>
-                OBSERVACIONES
+                Observaciones
             </th>
             <th>
-                OPCIONES
             </th>
         </tr>
     </thead>
@@ -67,8 +88,8 @@
                 @Html.DisplayFor(modelItem => item.Observations)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
+                    <a asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Detalles" class="btn btn-dark" /></a>
             </td>
         </tr>
 }
@@ -76,52 +97,64 @@
 </table>
 
 <style type="text/css">
-    .title{
-        background: #b80f22;
-        padding: 10px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        margin-left: 10px;
-        font-size: 30px; 
-        font-weight: bold;
-        color: #FFF;
-        width: 400px;
-        text-align: center;
-        border-radius: 10px;
+    .title{                              
+        font-size: 60px; 
+        font-weight: bold;        
+        width: 350px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
+    .addBox{
+        background-color: #b80f22;
+        width: 60px;
+        display: flex;
+        justify-content: center;          
+    }
+    .add{                         
+        font-size: 40px;
+        font-weight: bold;         
+        text-decoration: none;        
+        color: #FFF;        
+    }
+    .add:hover{
+        color: #000;
+    }
+    .textAdd{
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 200px;
+        border-width: 1px;
+        border-style: solid;                
     }
-    .add{                         
-        font-size: 50px;
-        font-weight: bold;         
-        text-decoration: none;
-        color: #000;
-    }
-    .add:hover{
-        color: #FFF;
-    }
-    .search{
-        display:flex;
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-top: 10px;
-        margin-bottom: 30px;
-        align-content:space-between;
-        background-color: #000;
-        padding: 10px;
-        border-radius: 10px;
+    .searchBar {
+        display:flex;                       
+        background-color: #b80f22;
+        padding: 5px;
+        height: 100%;
+        align-items: center;  
+        justify-content: center;
     }
     .toSearch{        
         border: none;
-        border-bottom: 2px solid #FFF;
-        border-radius: 0px;
-        background: transparent;
-        color: #FFF;
+        border-bottom: 2px solid #FFF;        
+        background: #FFF;
+        border-radius: 10px;
+        color: #000;
         width: 300px;
+        margin-left: 3px;
+        margin-right: 5px;
+        text-align: left;
     }
-    .toSearch::placeholder{
-            color: #FFF;
+    .toSearch::placeholder {
+        color: #000;        
+        text-align: center;
+    }
+    .select{
+        margin-right: 5px;
+        width: 120px;
     }
     .toCenter{
         display: flex;

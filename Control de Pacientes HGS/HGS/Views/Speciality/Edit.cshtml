@@ -1,10 +1,10 @@
-﻿@model HGS.Models.Branch
+﻿@model HGS.Models.Speciality
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<div class="title">EDITAR MUNICIPIO</div>
+<div class="title">EDITAR ESPECIALIDAD</div>
 
 <div class="row">
     <div class="col" style="display:flex;align-items:center;justify-content:center;">
@@ -13,28 +13,28 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
-                    <label asp-for="Municipality" class="control-label">MUNICIPIO</label>
-                    <input asp-for="Municipality" placeholder="Ingrese nombre del municipio" class="form-control" />
-                    <span asp-validation-for="Municipality" class="waring-message"></span>
+                    <label asp-for="Name" class="control-label">NOMBRE</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="waring-message"></span>
                 </div>
                 <div class="form-group d-grid gap-2 mt-3">
                     <input type="submit" value="Guardar cambios" class="btn btn-light" />
                 </div>
-            </form>
+            </form>            
         </div>        
     </div>
 </div>
 
 @if (@ViewData["Result"] != null)
 {
-    @if (@ViewData["Result"].ToString().Equals("OK"))
+    @if (@ViewData["Result"].Equals("OK"))
     {
         <script>
             function Error() {
-                Swal.fire('OK', '¡Municipio modificado existosamente!', 'success');
-            }
+                Swal.fire('OK', '¡Especialidad modificada existosamente!', 'success');
+            }            
         </script>
-    }    
+    }
     else
     {
         <script>
@@ -88,12 +88,6 @@
     .col {
         border-bottom: 5px solid #000;
     }
-    .return {
-        text-decoration: none;
-        font-size: 20px;
-        font-weight: bold;
-        margin: 5px;
-    }
 </style>
 
 <div style="padding: 30px;">
@@ -103,5 +97,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}    
 }

@@ -1,28 +1,22 @@
 ﻿using HGS.Models;
-using HGSModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HGS.Controllers
 {
     public class BranchController : Controller
     {
-        public IActionResult Index()
+        private readonly HgsContext _context;
+
+        public BranchController()
         {
-            return View();
+            _context = new HgsContext();
         }
-
+        
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            HgsContext _HGSContext = new HgsContext();
-            IEnumerable<HGSModel.Branch> branches = (from c in _HGSContext.Branches
-                                                     select new HGSModel.Branch
-                                                     {
-                                                         Id = c.Id,
-                                                         Municipality = c.Municipality,
-
-                                                     }).ToList();
-            
+            var branches = await _context.Branches.ToListAsync();
             return View(branches);
         }
 
@@ -34,62 +28,49 @@ namespace HGS.Controllers
 
         [HttpPost]
         public IActionResult Create(string municipality)
-        {
-            HgsContext _hgsContext = new HgsContext();
-
-            IEnumerable<HGSModel.Branch> _branches = (from c in _hgsContext.Branches
-                                                      where c.Municipality.ToLower() == municipality.ToLower()
-                                                      select new HGSModel.Branch
-                                                      {                                                          
-                                                          Municipality = c.Municipality
-                                                      }).ToList();
-
-            bool isExist = false;
-            for (int i = 0; i < _branches.Count(); i++)
+        {            
+            if (!_context.Branches.Any(c => c.Municipality.ToLower() == municipality.ToLower()))
             {
-                if (municipality.ToLower().Equals(_branches.ToList()[i].Municipality.ToLower()))
-                {
-                    isExist = true;
-                    break;
-                }
-            }
-
-            if (!isExist)
-            {
-                Models.Branch branch = new()
+                Branch branch = new()
                 {
                     Municipality = municipality
                 };
-                _hgsContext.Branches.Add(branch);
-                _hgsContext.SaveChanges();
-                @ViewData["Resultado"] = "¡Municipio agregado exitosamente!";
+                _context.Branches.Add(branch);
+                _context.SaveChanges();
+                @ViewData["Result"] = "OK";
             }
             else
             {
-                @ViewData["Resultado"] = "Este municipio ya ha sido ingresado...";
+                @ViewData["Result"] = "Error";
             }
             return View();
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            HgsContext _hgsContext = new();
-            Models.Branch branch = _hgsContext.Branches.FirstOrDefault(c => c.Id == id);
-            HGSModel.Branch branchResult = new()
-            {
-                Municipality = branch.Municipality
-            };
-            return View(branchResult);
+            var branch = await _context.Branches.FindAsync(id);
+            return View(branch);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string municipality)
+        public async Task<IActionResult> Edit(int id, string municipality)
         {
-            HgsContext _hgsContext = new();
-            Models.Branch branch = _hgsContext.Branches.FirstOrDefault(s => s.Id == id);
-            branch.Municipality = municipality;
-            _hgsContext.SaveChanges();
+            if (!_context.Branches.Any(c => c.Municipality.ToLower() == municipality.ToLower() && c.Id != id))
+            {
+                var branch = await _context.Branches.FindAsync(id);
+                if (branch != null)
+                {
+                    branch.Municipality = municipality;
+                    _context.Update(branch);
+                    _context.SaveChanges();
+                    @ViewData["Result"] = "OK";
+                }
+            }                                        
+            else
+            {
+                @ViewData["Result"] = "Error";
+            }
             return View();
         }
     }

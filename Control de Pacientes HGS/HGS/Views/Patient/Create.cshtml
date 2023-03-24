@@ -1,9 +1,9 @@
-﻿@model HGSModel.Patient
+﻿@model HGS.Models.Patient
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Añadir";
 }
-
+    
 <div class="title">AÑADIR PACIENTE</div>
 
 <div class="row">
@@ -35,7 +35,7 @@
                 <div class="form-group mt-3">
                     <label asp-for="Observations" class="control-label">OBSERVACIONES</label>
                     <input asp-for="Observations" placeholder="Añada alguna observación del paciente" class="form-control" />
-                    <span asp-validation-for="Observations" class="warning-message">@ViewData["Resultado"]</span>
+                    <span asp-validation-for="Observations" class="warning-message"></span>
                 </div>
                 <div class="form-group d-grid gap-2 mt-3">
                     <input type="submit" value="Añadir Paciente" class="btn btn-light" />
@@ -44,18 +44,44 @@
         </div>
     </div>
 
-    <di class="col" style="display:flex;align-items:center;justify-content:center;padding: 30px;">
-        <div class="information">Acá puede agregar un paciente al sistema. Si desea consultar
-            que el paciente ya ha sido ingresado al sistema, puede buscarlo en la sección de
-            "buscar paciente"
+    <div class="col" style="display:flex; flex-direction:column; align-items:center;justify-content:center;padding: 30px">
+        <div class="information">Acá puede agregar un paciente al sistema. En el espacio de
+            "observaciones" puedes añadir algún aspecto que se considere relevante conocer acerca
+            del paciente (Ej. Padece de dolores de cabeza, hipertensión). Si deseas saber si el paciente ya está
+            en el sistema, puedes dar click en el botón "Regresar".            
         </div>
-    </di>
+        <div>
+            <a asp-action="List">
+                <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+            </a>
+        </div>  
+    </div>
    
 </div>
 
+@if (@ViewData["Result"] != null)
+{    
+    @if(@ViewData["Result"].ToString().Equals("OK"))
+    {                
+        <script>
+            function Error() {
+                Swal.fire('OK','¡Paciente ingresado existosamente!','success');
+            }
+        </script>
+    }
+    else
+    {             
+        <script>
+            function Error() {
+                Swal.fire('Error','¡Este paciente ya ha sido ingresado!','error');
+            }
+        </script>        
+    }
+}
+
 <style type="text/css">
-    .title{        
-        padding: 20px;      
+    .title{     
+        padding: 20px;
         text-align: center;
         font-size: 40px;
         font-weight: bold;
@@ -80,7 +106,7 @@
         color: #FFF;              
     }           
     .data{
-        width:550px;
+        width:450px;
         padding:50px;
         margin-top: 40px;        
         margin-bottom: 40px;               
@@ -89,25 +115,15 @@
     .information{
         padding: 30px;
         text-align:justify;
-        font-size:30px;        
+        font-size:25px;        
     }   
     .warning-message {
-        color:#000;
-    }
+        color:#000;        
+    }    
     .col {
         border-bottom: 5px solid #000;
-    }  
-    .return {
-        text-decoration: none;
-        font-size: 20px;
-        font-weight: bold;
-        margin: 5px;
-    }
+    } 
 </style>
-
-<div style="padding: 30px;">
-    <a asp-action="List" class="return">< REGRESAR</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

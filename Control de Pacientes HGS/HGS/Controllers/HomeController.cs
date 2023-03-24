@@ -18,9 +18,30 @@ namespace HGS.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Login() 
         { 
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string username, string password, string checkbox)
+        {
+            if (checkbox != null)
+            {
+                if (username.Equals("ADMINISTRADOR_HGS") && password.Equals("#HGS_20234dMin"))
+                {
+                    return View("Index");
+                }
+                else
+                {
+                    @ViewData["Resultado"] = "Nombre o contraseña incorrecta";
+                    return View();
+                }
+            }
+
+            //Validar en BD
+            return View("Index");
         }
 
         public IActionResult About()

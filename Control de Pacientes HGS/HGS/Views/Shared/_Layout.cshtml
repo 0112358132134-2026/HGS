@@ -28,6 +28,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Area" asp-action="List">Áreas</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Speciality" asp-action="List">Especialidades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Areasucursal" asp-action="List">Areas Sucursales</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -39,6 +45,12 @@
         </main>
     </div>
 
+    <style type="text/css">
+        .nav-item:hover{
+            background-color: #b80f22;            
+        }
+    </style>
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - HGS - <a asp-area="" asp-controller="Home" asp-action="About">Acerca de</a>
@@ -46,6 +58,9 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -1,11 +1,11 @@
-﻿@model IEnumerable<HGS.Models.Area>
+﻿@model IEnumerable<HGSModel.Areasucursal>
 
 @{
-    ViewData["Title"] = "Listado de Áreas";
+    ViewData["Title"] = "List";
 }
 
 <div style="display:flex;">
-    <div class="title">LISTADO DE ÁREAS</div>
+    <div class="title">LISTADO DE ÁREASSUCURSALES</div>
     <div style="margin:20px; background-color: #000; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>
 </div>
 
@@ -13,26 +13,25 @@
     <thead>
         <tr class="table-danger">
             <th>
-                NOMBRE
+                ÁREA
             </th>
             <th>
-                DESCRIPCIÓN
+                SUCURSAL
             </th>
-            <th>                
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.AreaName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.BranchName)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
+                <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
             </td>
         </tr>
 }
@@ -44,11 +43,11 @@
         background: #b80f22;
         padding: 10px;
         margin-top: 20px;
-        margin-bottom: 20px;        
+        margin-bottom: 20px;
         font-size: 30px;
         font-weight: bold;
         color: #FFF;
-        width: 400px;
+        width: 600px;
         text-align: center;
         display: flex;
         align-items: center;

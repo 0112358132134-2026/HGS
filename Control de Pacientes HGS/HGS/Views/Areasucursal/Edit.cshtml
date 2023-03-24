@@ -1,10 +1,10 @@
-﻿@model HGS.Models.Branch
+﻿@model HGS.Models.Areasucursal
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<div class="title">EDITAR MUNICIPIO</div>
+<div class="title">EDITAR AREASUCURSAL</div>
 
 <div class="row">
     <div class="col" style="display:flex;align-items:center;justify-content:center;">
@@ -13,33 +13,40 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
-                    <label asp-for="Municipality" class="control-label">MUNICIPIO</label>
-                    <input asp-for="Municipality" placeholder="Ingrese nombre del municipio" class="form-control" />
-                    <span asp-validation-for="Municipality" class="waring-message"></span>
+                    <label asp-for="AreaId" class="control-label">ÁREA</label>
+                    <select asp-for="AreaId" class="select" asp-items="ViewBag.AreaId"></select>
+                    <span asp-validation-for="AreaId" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="BranchId" class="control-label">SUCURSAL</label>
+                    <select asp-for="BranchId" class="select" asp-items="ViewBag.BranchId"></select>
+                    <span asp-validation-for="BranchId" class="text-danger"></span>
                 </div>
                 <div class="form-group d-grid gap-2 mt-3">
                     <input type="submit" value="Guardar cambios" class="btn btn-light" />
                 </div>
             </form>
-        </div>        
+        </div>
+        
     </div>
 </div>
 
 @if (@ViewData["Result"] != null)
 {
-    @if (@ViewData["Result"].ToString().Equals("OK"))
+    @if (@ViewData["Result"].Equals("OK"))
     {
         <script>
             function Error() {
-                Swal.fire('OK', '¡Municipio modificado existosamente!', 'success');
+                Swal.fire('OK', '¡Área modificada existosamente!', 'success');
             }
         </script>
-    }    
+    }
+
     else
     {
         <script>
             function Error() {
-                Swal.fire('Error', '¡Este municipio ya ha sido ingresado!', 'error');
+                Swal.fire('Error', '¡Esta área ya ha sido ingresada!', 'error');
             }
         </script>
     }
@@ -57,23 +64,16 @@
         color: #FFF;
         font-weight: bold;
     }
-    .form-control {
+    .select {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
         border: none;
-        border-bottom: 2px solid #FFF;
-        border-radius: 0px;
-        background: transparent;
-        color: #FFF;
-    }
-    .form-control:read-only {
-        background: transparent;
-        color: #000;
-    }
-    .form-control::placeholder {
-        color: #FFF;
-    }
-    .form-control:focus {
-        background: transparent;
-        color: #FFF;
+        text-transform: capitalize;
+        color: #fff;
+        background: #292929;
+        text-align: center;       
     }
     .data {
         width: 550px;
@@ -82,17 +82,8 @@
         margin-bottom: 40px;
         background-color: #FE903F;
     }
-    .warning-message {
-        color: #000;
-    }
     .col {
         border-bottom: 5px solid #000;
-    }
-    .return {
-        text-decoration: none;
-        font-size: 20px;
-        font-weight: bold;
-        margin: 5px;
     }
 </style>
 

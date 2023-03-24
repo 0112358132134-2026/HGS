@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HGS.Controllers
 {
-    public class AreaController : Controller
+    public class SpecialityController : Controller
     {
         private readonly HgsContext _context;
 
-        public AreaController()
+        public SpecialityController()
         {
             _context = new HgsContext();
         }
@@ -16,27 +16,26 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var areas = await _context.Areas.ToListAsync();
-            return View(areas);
+            var specialities = await _context.Specialities.ToListAsync();
+            return View(specialities);
         }
 
         [HttpGet]
-        public IActionResult Create() 
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(string name, string description)
+        public IActionResult Create(string name)
         {
-            if (!_context.Areas.Any(c => c.Name.ToLower() == name.ToLower()))
+            if (!_context.Specialities.Any(c => c.Name.ToLower() == name.ToLower()))
             {
-                Area area = new()
+                Speciality speciality = new()
                 {
-                    Name = name,
-                    Description = description
+                    Name = name
                 };
-                _context.Areas.Add(area);
+                _context.Specialities.Add(speciality);
                 _context.SaveChanges();
                 @ViewData["Result"] = "OK";
             }            
@@ -50,25 +49,24 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var area = await _context.Areas.FindAsync(id);
-            return View(area);
+            var speciality = await _context.Specialities.FindAsync(id);
+            return View(speciality);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, string name, string description)
+        public async Task<IActionResult> Edit(int id, string name)
         {
-            if (!_context.Areas.Any(c => c.Name.ToLower() == name.ToLower() && c.Id != id)) 
+            if (!_context.Specialities.Any(c => c.Name.ToLower() == name.ToLower() && c.Id != id)) 
             {
-                var area = await _context.Areas.FindAsync(id);
-                if (area != null)
+                var speciality = await _context.Specialities.FindAsync(id);
+                if (speciality != null)
                 {
-                    area.Name = name;
-                    area.Description = description;
-                    _context.Update(area);
+                    speciality.Name = name;
+                    _context.Update(speciality);
                     _context.SaveChanges();
                     @ViewData["Result"] = "OK";
                 }                
-            }            
+            }                                        
             else
             {
                 @ViewData["Result"] = "Error";
