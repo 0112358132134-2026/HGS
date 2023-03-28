@@ -1,22 +1,15 @@
 ﻿using HGS.Models;
+using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HGS.Controllers
 {
     public class AreaController : Controller
-    {
-        private readonly HgsContext _context;
-
-        public AreaController()
-        {
-            _context = new HgsContext();
-        }
-
+    {        
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var areas = await _context.Areas.ToListAsync();
+            IEnumerable<Area> areas = await APIService.AreaGetList();
             return View(areas);
         }
 
@@ -27,52 +20,25 @@ namespace HGS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string name, string description)
+        public async Task<IActionResult> Create([Bind("Name,Description")] Area newArea)
         {
-            if (!_context.Areas.Any(c => c.Name.ToLower() == name.ToLower()))
-            {
-                Area area = new()
-                {
-                    Name = name,
-                    Description = description
-                };
-                _context.Areas.Add(area);
-                _context.SaveChanges();
-                @ViewData["Result"] = "OK";
-            }            
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
+            HGSModel.GeneralResult generalResult = await APIService.AreaSet(newArea);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var area = await _context.Areas.FindAsync(id);
+            Area area = await APIService.AreaGet(id);
             return View(area);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, string name, string description)
+        public async Task<IActionResult> Edit([Bind("Id","Name,Description")] Area updatedArea)
         {
-            if (!_context.Areas.Any(c => c.Name.ToLower() == name.ToLower() && c.Id != id)) 
-            {
-                var area = await _context.Areas.FindAsync(id);
-                if (area != null)
-                {
-                    area.Name = name;
-                    area.Description = description;
-                    _context.Update(area);
-                    _context.SaveChanges();
-                    @ViewData["Result"] = "OK";
-                }                
-            }            
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
+            HGSModel.GeneralResult generalResult = await APIService.AreaUpdate(updatedArea);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
     }

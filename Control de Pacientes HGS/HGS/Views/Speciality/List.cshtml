@@ -1,15 +1,25 @@
-﻿@model IEnumerable<HGS.Models.Speciality>
+﻿<link rel="stylesheet" href="~/css/listView.css" asp-append-version="true" />
+@model IEnumerable<HGS.Models.Speciality>
 
 @{
     ViewData["Title"] = "Listado de especialidades";
 }
 
-<div style="display:flex;">
-    <div class="title">LISTADO DE ESPECIALIDADES</div>
-    <div style="margin:20px; background-color: #000; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>
+<div class="container">
+    <div class="title">
+        ESPECIALIDADES
+    </div>
+    <div class="addContainer">
+        <div class="addBox">
+            <a asp-action="Create" class="add">+</a>
+        </div>
+        <div class="addText">
+            &larr; Añadir Especialidad
+        </div>
+    </div>    
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped" style="margin-bottom:100px;">
     <thead>
         <tr class="table-danger">
             <th>
@@ -32,29 +42,3 @@
 }
     </tbody>
 </table>
-
-<style type="text/css">
-    .title {
-        background: #b80f22;
-        padding: 10px;
-        margin-top: 20px;
-        margin-bottom: 20px;        
-        font-size: 30px;
-        font-weight: bold;
-        color: #FFF;
-        width: 600px;
-        text-align: center;        
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .add {
-        font-size: 50px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #FFF;
-    }
-    .add:hover {
-        color: #b80f22;
-    }
-</style>  

@@ -1,24 +1,17 @@
 ﻿using HGS.Models;
+using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HGS.Controllers
 {
     public class PatientController : Controller
     {
-        private readonly HgsContext _context;
-
-        public PatientController() 
-        {
-            _context = new HgsContext();
-        }
-
         [HttpGet]
         public async Task<IActionResult> List(string tosearch, string optionSearch)
         {
-            IEnumerable<Patient> patients = await Functions.APIService.PatientGetList();
+            IEnumerable<Patient> patients = await APIService.PatientGetList();
 
-            if (tosearch != "")
+            if (tosearch != null)
             {
                 switch (optionSearch)
                 {
@@ -30,7 +23,7 @@ namespace HGS.Controllers
                         break;
                     case "LASTNAME":
                         patients = patients.Where(s => s.Lastname.ToLower().Contains(tosearch.ToLower()));
-                        break;                    
+                        break;
                 }
             }
             return View(patients);
@@ -43,59 +36,33 @@ namespace HGS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string dpi, string name, string lastname, DateTime birthdate, string? observations)
+        public async Task<IActionResult> Create([Bind("Dpi", "Name", "Lastname", "Birthdate", "Observations")] Patient newPatient)
         {
-            if (!_context.Patients.Any(c => c.Dpi == dpi))
-            {
-                Patient patient = new()
-                {
-                    Dpi = dpi,
-                    Name = name,
-                    Lastname = lastname,
-                    Birthdate = birthdate,
-                    Observations = observations,                    
-                };
-                _context.Patients.Add(patient);
-                _context.SaveChanges();
-                @ViewData["Result"] = "OK";
-            }
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
+            HGSModel.GeneralResult generalResult = await APIService.PatientSet(newPatient);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);         
+            Patient patient = await APIService.PatientGet(id);            
             return View(patient);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, string dpi, string name, string lastname, DateTime birthdate, string? observations)
+        public async Task<IActionResult> Edit([Bind("Id","Dpi", "Name", "Lastname", "Birthdate", "Observations")] Patient updatedPatient)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient != null) 
-            {
-                patient.Dpi = dpi;
-                patient.Name = name;
-                patient.Lastname = lastname;
-                patient.Birthdate = birthdate;
-                patient.Observations = observations;
-                _context.Patients.Update(patient);
-                _context.SaveChanges();
-                @ViewData["Result"] = "OK";
-            }
+            HGSModel.GeneralResult generalResult = await APIService.PatientUpdate(updatedPatient);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
+            Patient patient = await APIService.PatientGet(id);
             return View(patient);
-        }        
+        }
     }
 }

@@ -1,15 +1,25 @@
-﻿@model IEnumerable<HGS.Models.Branch>
+﻿<link rel="stylesheet" href="~/css/listView.css" asp-append-version="true" />
+@model IEnumerable<HGS.Models.Branch>
 
 @{
     ViewData["Title"] = "Listado de Municipios";
 }
 
-<div style="display:flex;">
-    <div class="title">LISTADO DE MUNICIPIOS</div>
-    <div style="margin:20px; background-color: #000; width: 60px; display: flex; justify-content: center; align-items: center; border-radius: 10px;"><a asp-action="Create" class="add">+</a></div>
+<div class="container">
+    <div class="title">
+        MUNICIPIOS
+    </div>
+    <div class="addContainer">
+        <div class="addBox">
+            <a asp-action="Create" class="add">+</a>
+        </div>
+        <div class="addText">
+            &larr; Añadir Municipio
+        </div>
+    </div>    
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped" style="margin-bottom:100px;">
     <thead>
         <tr class="table-danger">
             <th>
@@ -26,36 +36,9 @@
                 @Html.DisplayFor(modelItem => item.Municipality)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
+                <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-
-<style type="text/css">
-    .title {
-        background: #b80f22;
-        padding: 10px;
-        margin-top: 20px;
-        margin-bottom: 20px;        
-        font-size: 30px;
-        font-weight: bold;
-        color: #FFF;
-        width: 400px;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .add {
-        font-size: 50px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #FFF;
-    }
-    .add:hover {
-        color: #b80f22;
-    }
-</style>  

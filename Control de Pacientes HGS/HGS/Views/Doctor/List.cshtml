@@ -1,0 +1,64 @@
+﻿<link rel="stylesheet" href="~/css/listView.css" asp-append-version="true" />
+@model IEnumerable<HGSModel.Doctor>
+
+@{
+    ViewData["Title"] = "Doctores";
+}
+
+<div class="container">
+    <div class="title">
+        DOCTORES
+    </div>
+    <div class="addContainer">
+        <div class="addBox">
+            <a asp-action="Create" class="add">+</a>
+        </div>
+        <div class="addText">
+            &larr; Añadir Doctor
+        </div>       
+    </div>
+</div>
+
+<table class="table table-striped" style="margin-bottom:100px;">
+    <thead>
+        <tr class="table-danger">
+            <th>
+                No. Colegiado
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Apellido
+            </th>
+            <th>
+                Especialidad
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollegiateNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecialtyName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>
+                    <a asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Detalles" class="btn btn-dark" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

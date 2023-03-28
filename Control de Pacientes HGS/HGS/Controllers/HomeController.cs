@@ -1,6 +1,4 @@
-﻿using HGS.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
 {
@@ -13,6 +11,7 @@ namespace HGS.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -35,24 +34,19 @@ namespace HGS.Controllers
                 }
                 else
                 {
-                    @ViewData["Resultado"] = "Nombre o contraseña incorrecta";
+                    @ViewData["Response"] = "Incorrect";
                     return View();
                 }
             }
 
-            //Validar en BD
+            //Validar en BD si el Dr. existe
             return View("Index");
         }
 
+        [HttpGet]
         public IActionResult About()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -1,0 +1,67 @@
+﻿body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,50,65,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+.form-control {
+    border: none;
+    border-bottom: 2px solid #FFF;
+    border-radius: 0px;
+    background: transparent;
+    color: #FFF;
+}
+
+    .form-control:focus {
+        background: transparent;
+        color: #FFF;
+    }
+
+.linksContainer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.link {
+    text-decoration: none;
+    color: #FFF;
+}
+
+    .link:hover {
+        color: #b80f22;
+    }
+
+.administradorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.checkboxContainer {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mycheckbok {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.login {
+    background: #000;
+    padding: 50px;
+    color: #FFF;
+    border-radius: 30px;
+    transition: transform 0.3s;
+}
+
+    .login:hover {
+        transform: scale(1.1);
+    }

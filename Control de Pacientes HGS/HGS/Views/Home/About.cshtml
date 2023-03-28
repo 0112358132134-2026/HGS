@@ -1,6 +1,48 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    Layout = null;
+    ViewData["Title"] = "Acerca de";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Acerca de HGS.</p>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HGS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />    
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+</head>
+
+<div class="row">
+    <div class="col" id="colTitle">
+        <div class="title">
+            <p>Acerca de Nosotros</p>            
+        </div>  
+        <div class="subTitle">
+            <p>HGS</p>
+        </div>
+    </div>
+    <div class="col" id="colInfo">
+        <div class="infoTitle">
+            <h1>Descripción</h1>
+        </div>
+        <div class="info" id="firstInfo">
+            <p style="text-align:justify">
+                Este es el sitio web oficial del HGS (Hospital Guatemalteco Seguro). Contamos con varias sucursales en todo
+                el país. Cualquier informacióm comunicarse al tel.6635-1580 o al correo _HGScomunica@correo.com.gt.
+            </p>
+        </div>
+        <div class="infoTitle">
+            <h1>¿Cómo usar el sitio?</h1>
+        </div>
+        <div class="info">
+            <p style="text-align:justify">
+                Si eres familiar de un paciente que está siendo atendido en el HGS, podrás
+                consultar el estado en el que está o conocer más información detallada.
+                Solo debes de dar click acá "<a class="link" asp-area="" asp-controller="Home" asp-action="Login">¿Solo eres un visitante?</a>" para poder
+                ingresar; o bien, ingresar desde la página principal "<a class="link" asp-area="" asp-controller="Home" asp-action="Login">Inicio Sesión</a>".<br>
+
+                Si eres un <b>doctor</b> o un <b>administrador</b> del HGS, simplemente inicia sesión en "<a class="link" asp-area="" asp-controller="Home" asp-action="Login">Inicio Sesión</a>".
+                De esta manera podrás llevar un buen control de los pacientes.
+            </p>
+        </div>
+    </div>
+</div>

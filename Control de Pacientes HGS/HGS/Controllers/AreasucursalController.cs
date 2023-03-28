@@ -1,124 +1,66 @@
 ﻿using HGS.Models;
+using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Xml.Linq;
 
 namespace HGS.Controllers
 {
     public class AreasucursalController : Controller
     {
-        private readonly HgsContext _context;
-
-        public AreasucursalController()
-        {
-            _context = new HgsContext();
-        }
-
         [HttpGet]
-        public IActionResult List() 
+        public async Task<IActionResult> List()
         {
-            IEnumerable<HGSModel.Areasucursal> areasucursals =
-                (from AS in _context.Areasucursals
-                 join a in _context.Areas on AS.AreaId equals a.Id
-                 join s in _context.Branches on AS.BranchId equals s.Id
-                 select new HGSModel.Areasucursal
-                 {
-                     Id = AS.Id,
-                     AreaName = a.Name,
-                     BranchName = s.Municipality
-                 }).ToList();
+            IEnumerable<HGSModel.Areasucursal> areasucursals = await APIService.AreasucursalGetList();
             return View(areasucursals);
         }
 
         [HttpGet]
-        public IActionResult Create() 
+        public async Task<IActionResult> Create()
         {
-            SelectListItem();            
+            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGetAB();
 
-            if (!((IEnumerable<dynamic>)ViewBag.AreaId).Any() && ((IEnumerable<dynamic>)ViewBag.BranchId).Any())
+            if (areasucursal.Areas!= null && areasucursal.Branches != null)
             {
-                @ViewData["Result"] = "noAreas";
-            }
-            else if (((IEnumerable<dynamic>)ViewBag.AreaId).Any() && !((IEnumerable<dynamic>)ViewBag.BranchId).Any())
-            {
-                @ViewData["Result"] = "noBranches";
-            }
-            else if (!((IEnumerable<dynamic>)ViewBag.AreaId).Any() && !((IEnumerable<dynamic>)ViewBag.BranchId).Any())
-            {
-                @ViewData["Result"] = "noData";
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(int areaid, int branchid)
-        {                    
-            if (!_context.Areasucursals.Any(c => c.AreaId == areaid && c.BranchId == branchid))
-            {
-                Areasucursal areasucursal = new()
+                if (!areasucursal.Areas.Any() && areasucursal.Branches.Any())
                 {
-                    AreaId = areaid,
-                    BranchId = branchid
-                };
-                _context.Areasucursals.Add(areasucursal);
-                _context.SaveChanges();
-                @ViewData["Result"] = "OK";
+                    @ViewData["Response"] = "NoAreas";
+                }
+                else if (areasucursal.Areas.Any() && !areasucursal.Branches.Any())
+                {
+                    @ViewData["Response"] = "NoBranches";
+                }
+                else if (!areasucursal.Areas.Any() && !areasucursal.Branches.Any())
+                {
+                    @ViewData["Response"] = "NoData";
+                }
             }
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
-            SelectListItem();
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id) 
-        {
-            var areasucursal = await _context.Areasucursals.FindAsync(id);
-            SelectListItem();
             return View(areasucursal);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, int areaid, int branchid) 
+        public async Task<IActionResult> Create([Bind("AreaId","BranchId")] Areasucursal newAreasucursal)
         {
-            if (!_context.Areasucursals.Any(c => c.AreaId == areaid && c.BranchId == branchid && c.Id != id))
-            {
-                var areasucursal = await _context.Areasucursals.FindAsync(id);
-                if (areasucursal != null)
-                {
-                    areasucursal.AreaId = areaid;
-                    areasucursal.BranchId = branchid;
-                    _context.Update(areasucursal);
-                    _context.SaveChanges();
-                    @ViewData["Result"] = "OK";
-                }
-            }
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
-            SelectListItem();
-            return View();            
+            HGSModel.GeneralResult generalResult = await APIService.AreasucursalSet(newAreasucursal);
+            @ViewData["Response"] = generalResult.Message;
+
+            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGetAB();            
+            return View(areasucursal);
         }
 
-        public void SelectListItem() 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-            ViewBag.AreaId = (from c in _context.Areas
-                              select new SelectListItem
-                              {
-                                  Value = c.Id.ToString(),
-                                  Text = c.Name
-                              }).ToList();
+            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGet(id);            
+            return View(areasucursal);
+        }
 
-            ViewBag.BranchId = (from c in _context.Branches
-                                select new SelectListItem
-                                {
-                                    Value = c.Id.ToString(),
-                                    Text = c.Municipality
-                                }).ToList();
+        [HttpPost]
+        public async Task<IActionResult> Edit([Bind("Id","AreaId", "BranchId")] Areasucursal updatedAreasucursal)
+        {
+            HGSModel.GeneralResult generalResult = await APIService.AreasucursalUpdate(updatedAreasucursal);
+            @ViewData["Response"] = generalResult.Message;
+            
+            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGetAB();
+            return View(areasucursal);
         }
     }
 }

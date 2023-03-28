@@ -1,22 +1,15 @@
 ﻿using HGS.Models;
+using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HGS.Controllers
 {
     public class SpecialityController : Controller
     {
-        private readonly HgsContext _context;
-
-        public SpecialityController()
-        {
-            _context = new HgsContext();
-        }
-
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var specialities = await _context.Specialities.ToListAsync();
+            IEnumerable<Speciality> specialities = await APIService.SpecialityGetList();
             return View(specialities);
         }
 
@@ -27,50 +20,25 @@ namespace HGS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string name)
+        public async Task<IActionResult> Create([Bind("Name")] Speciality newSpeciality)
         {
-            if (!_context.Specialities.Any(c => c.Name.ToLower() == name.ToLower()))
-            {
-                Speciality speciality = new()
-                {
-                    Name = name
-                };
-                _context.Specialities.Add(speciality);
-                _context.SaveChanges();
-                @ViewData["Result"] = "OK";
-            }            
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
+            HGSModel.GeneralResult generalResult = await APIService.SpecialitySet(newSpeciality);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var speciality = await _context.Specialities.FindAsync(id);
+            Speciality speciality = await APIService.SpecialityGet(id);
             return View(speciality);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, string name)
+        public async Task<IActionResult> Edit([Bind("Id","Name")] Speciality updatedSpeciality)
         {
-            if (!_context.Specialities.Any(c => c.Name.ToLower() == name.ToLower() && c.Id != id)) 
-            {
-                var speciality = await _context.Specialities.FindAsync(id);
-                if (speciality != null)
-                {
-                    speciality.Name = name;
-                    _context.Update(speciality);
-                    _context.SaveChanges();
-                    @ViewData["Result"] = "OK";
-                }                
-            }                                        
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
+            HGSModel.GeneralResult generalResult = await APIService.SpecialityUpdate(updatedSpeciality);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
     }

@@ -8,18 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HGS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/HGS.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
 </head>
 
-<body class="d-flex justify-content-center align-items-center vh-100" style="background:url(https://lh3.googleusercontent.com/AhL78lLw6sN4iua_5CFEoE6KN4lsRmOl1Z9W7kvhTqlZHTz-P0lP98BXpLX8G1nTOwh4gGCGdfIsyY-Sy8kjyKKPS_7IvyngstIzVONtTw); background-size: cover;">
-
-    <div class="bg-black p-5 rounded-3 text-white">
-                    
+<body>
+    <div class="login">                   
         <div class="text-center fs-3 fw-bold">
             INICIO SESIÓN
         </div>
-
         <form asp-action="Login">
             <div class="mt-4">
                 <div>
@@ -27,76 +23,44 @@
                 </div>
                 <input class="form-control" type="text" name="username" required placeholder="Ingrese su usuario">
             </div>
-
             <div class="mt-3">
                 <div>
                     <label for="password">Contraseña</label>
                 </div>
                 <input class="form-control" type="password" name="password" required placeholder="Ingrese su contraseña">
             </div>
-
-            <div class="validation">
+            <div class="administradorContainer">
                 <div>Soy un administrador</div>
-                <div class="check"><input type="checkbox" name="checkbox" class="mycheckbok" /></div>
+                <div class="checkboxContainer">
+                    <input type="checkbox" name="checkbox" class="mycheckbok" />
+                </div>
             </div>
-
             <div class="d-grid gap-2 mt-3">
                 <input class="btn btn-danger" type="submit" value="Ingresar">
             </div>
         </form>
-
-        <div class="bottom">
+        <div class="linksContainer">
             <div>
-                <a asp-controller="Patient" asp-action="List" class="text">Solo soy un visitante</a>
+                <a asp-controller="Patient" asp-action="List" class="link">Solo soy un visitante</a>
             </div>
             <div>
-                <a asp-controller="Home" asp-action="About" class="text">Acerca de nosotros</a>
+                <a asp-controller="Home" asp-action="About" class="link">Acerca de nosotros</a>
             </div>
         </div>
-
     </div>
 </body>
 
-<style type="text/css">
-    .form-control{
-        border: none;
-        border-bottom: 2px solid #FFF;
-        border-radius: 0px;
-        background: transparent;
-        color: #FFF;
-    }    
-    .form-control:focus {
-        background: transparent;
-        color: #FFF;
+@if (@ViewData["Response"] != null)
+{
+    @if (@ViewData["Response"].ToString().Equals("Incorrect"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', 'Nombre o contraseña incorrecta', 'error');
+            }
+        </script>
     }
-    .bottom{
-        text-align: center;        
-        margin-top: 30px;
-    }
-    .text{
-        text-decoration: none;
-        color: #FFF;
-    }
-    .text:hover{
-        color: #b80f22;
-    }
-    .validation{        
-        display: flex;
-        align-items: center;
-        justify-content: center;        
-        padding: 5px;
-        margin-top: 10px;
-    }
-    .check{
-        margin-left: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+}
 
-    .mycheckbok {
-        height: 20px;
-        width: 20px;
-        cursor: pointer;        
-    }    
-</style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

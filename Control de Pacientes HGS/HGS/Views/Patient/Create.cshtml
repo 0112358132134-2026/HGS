@@ -1,15 +1,15 @@
-﻿@model HGS.Models.Patient
+﻿<link rel="stylesheet" href="~/css/createView.css" asp-append-version="true" />
+@model HGS.Models.Patient
 
 @{
-    ViewData["Title"] = "Añadir";
+    ViewData["Title"] = "Añadir Paciente";
 }
     
 <div class="title">AÑADIR PACIENTE</div>
 
 <div class="row">
-
-    <div class="col" style="display:flex;align-items:center;justify-content:center;">
-        <div class="data">
+    <div class="col">
+        <div class="formContainer">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
@@ -43,25 +43,24 @@
             </form>
         </div>
     </div>
-
-    <div class="col" style="display:flex; flex-direction:column; align-items:center;justify-content:center;padding: 30px">
-        <div class="information">Acá puede agregar un paciente al sistema. En el espacio de
-            "observaciones" puedes añadir algún aspecto que se considere relevante conocer acerca
-            del paciente (Ej. Padece de dolores de cabeza, hipertensión). Si deseas saber si el paciente ya está
-            en el sistema, puedes dar click en el botón "Regresar".            
+    <div class="col" style="flex-direction:column;padding:30px">
+        <div class="information">
+            Acá puede agregar un paciente al sistema. En el espacio de "observaciones" puedes añadir
+            algún aspecto que se considere relevante conocer acerca del paciente (Ej. Padece de dolores
+            de cabeza, hipertensión). Si deseas saber si el paciente ya está en el sistema, puedes dar
+            click en el botón "Regresar".            
         </div>
         <div>
             <a asp-action="List">
                 <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
             </a>
         </div>  
-    </div>
-   
+    </div>   
 </div>
 
-@if (@ViewData["Result"] != null)
+@if (@ViewData["Response"] != null)
 {    
-    @if(@ViewData["Result"].ToString().Equals("OK"))
+    @if (@ViewData["Response"].ToString().Equals("Success"))
     {                
         <script>
             function Error() {
@@ -69,61 +68,23 @@
             }
         </script>
     }
-    else
+    else if (@ViewData["Response"].ToString().Equals("Unsuccessfully"))
     {             
         <script>
             function Error() {
-                Swal.fire('Error','¡Este paciente ya ha sido ingresado!','error');
+                Swal.fire('Advertencia','¡Este paciente ya ha sido ingresado!','info');
             }
         </script>        
     }
+    else if (@ViewData["Response"].ToString().Equals("Error"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
+            }
+        </script>
+    }
 }
-
-<style type="text/css">
-    .title{     
-        padding: 20px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: bold;
-        border-bottom: 5px solid #000;
-    }
-    .control-label{
-        color: #FFF;
-        font-weight:bold;
-    }
-    .form-control{
-        border: none;
-        border-bottom: 2px solid #FFF;               
-        border-radius: 0px;
-        background: transparent;
-        color: #FFF;        
-    }
-    .form-control::placeholder {
-        color : #FFF;
-    }    
-    .form-control:focus{
-        background: transparent;        
-        color: #FFF;              
-    }           
-    .data{
-        width:450px;
-        padding:50px;
-        margin-top: 40px;        
-        margin-bottom: 40px;               
-        background-color: #b80f22;       
-    }    
-    .information{
-        padding: 30px;
-        text-align:justify;
-        font-size:25px;        
-    }   
-    .warning-message {
-        color:#000;        
-    }    
-    .col {
-        border-bottom: 5px solid #000;
-    } 
-</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

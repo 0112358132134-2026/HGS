@@ -51,9 +51,9 @@
     </a>
 </div>
 
-@if (@ViewData["Result"] != null)
+@if (@ViewData["Response"] != null)
 {
-    @if (@ViewData["Result"].ToString().Equals("OK"))
+    @if (@ViewData["Response"].ToString().Equals("Success"))
     {
         <script>
             function Error() {
@@ -61,6 +61,14 @@
             }
         </script>
     }    
+    else if (@ViewData["Response"].ToString().Equals("Error"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
+            }
+        </script>
+    }
 }
 
 <style type="text/css">

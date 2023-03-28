@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace HGSModel
 {
@@ -31,6 +32,10 @@ namespace HGSModel
         
         public int SpecialtyId { get; set; }
 
+        public string? SpecialtyName { get; set; }
+
         public virtual Speciality Specialty { get; set; } = null!;
+
+        public List<SelectListItem>? Specialities { get; set; }
     }
 }

@@ -1,4 +1,8 @@
-﻿namespace HGSModel
+﻿//using Microsoft.AspNetCore.Mvc.Rendering;
+
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace HGSModel
 {
     public class Areasucursal
     {
@@ -15,5 +19,9 @@
         public string? AreaName { get; set; }
 
         public string? BranchName { get; set; }
+
+        public List<SelectListItem>? Areas { get; set; }
+
+        public List<SelectListItem>? Branches { get; set; }
     }
 }

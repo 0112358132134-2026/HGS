@@ -25,21 +25,29 @@
     </div>
 </div>
 
-@if (@ViewData["Result"] != null)
+@if (@ViewData["Response"] != null)
 {
-    @if (@ViewData["Result"].Equals("OK"))
+    @if (@ViewData["Response"].ToString().Equals("Success"))
     {
         <script>
             function Error() {
-                Swal.fire('OK', '¡Especialidad modificada existosamente!', 'success');
-            }            
+                Swal.fire('Éxito', '¡Especialidad modificada existosamente!', 'success');
+            }
         </script>
     }
-    else
+    else if (@ViewData["Response"].ToString().Equals("Unsuccessfully"))
+    {             
+        <script>
+            function Error() {
+                Swal.fire('Advertencia','¡Esta especialidad ya ha sido ingresada!','info');
+            }
+        </script>        
+    }
+    else if (@ViewData["Response"].ToString().Equals("Error"))
     {
         <script>
             function Error() {
-                Swal.fire('Error', '¡Este municipio ya ha sido ingresado!', 'error');
+                Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
             }
         </script>
     }

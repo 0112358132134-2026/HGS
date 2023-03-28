@@ -1,0 +1,95 @@
+﻿.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.addContainer {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 60px;
+    font-weight: bold;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border-bottom: 5px solid #000;
+    margin-bottom: 30px;
+}
+
+.addBox {
+    background-color: #b80f22;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.add {
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #FFF;
+}
+
+    .add:hover {
+        color: #000;
+    }
+
+.addText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+/*Only for Patient Model*/
+
+.searchBar {
+    display: flex;
+    background-color: #b80f22;
+    border-radius: 10px;
+    padding: 5px;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around
+}
+
+.toSearch {
+    border: none;
+    border-bottom: 2px solid #FFF;
+    background: #FFF;
+    border-radius: 10px;
+    color: #000;
+    width: 500px;
+    height: 35px;
+    margin-left: 3px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+    .toSearch::placeholder {
+        color: #000;
+        text-align: center;
+    }
+   
+.select {
+    margin-right: 5px;
+    width: 170px;
+    height: 35px;
+    text-align: center;
+    background-color: #b80f22;
+    border: 1px solid #000;
+    border-radius: 10px;
+    color: #FFF;
+}
+
+    .select:focus {
+        outline: none;
+    }
+
+/**/

@@ -1,22 +1,15 @@
 ﻿using HGS.Models;
+using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HGS.Controllers
 {
     public class BranchController : Controller
     {
-        private readonly HgsContext _context;
-
-        public BranchController()
-        {
-            _context = new HgsContext();
-        }
-        
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var branches = await _context.Branches.ToListAsync();
+            IEnumerable<Branch> branches = await APIService.BranchGetList();
             return View(branches);
         }
 
@@ -27,50 +20,25 @@ namespace HGS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string municipality)
-        {            
-            if (!_context.Branches.Any(c => c.Municipality.ToLower() == municipality.ToLower()))
-            {
-                Branch branch = new()
-                {
-                    Municipality = municipality
-                };
-                _context.Branches.Add(branch);
-                _context.SaveChanges();
-                @ViewData["Result"] = "OK";
-            }
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
+        public async Task<IActionResult> Create([Bind("Municipality")] Branch newBranch)
+        {
+            HGSModel.GeneralResult generalResult = await APIService.BranchSet(newBranch);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var branch = await _context.Branches.FindAsync(id);
+            Branch branch = await APIService.BranchGet(id);
             return View(branch);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, string municipality)
+        public async Task<IActionResult> Edit([Bind("Id","Municipality")] Branch updatedBranch)
         {
-            if (!_context.Branches.Any(c => c.Municipality.ToLower() == municipality.ToLower() && c.Id != id))
-            {
-                var branch = await _context.Branches.FindAsync(id);
-                if (branch != null)
-                {
-                    branch.Municipality = municipality;
-                    _context.Update(branch);
-                    _context.SaveChanges();
-                    @ViewData["Result"] = "OK";
-                }
-            }                                        
-            else
-            {
-                @ViewData["Result"] = "Error";
-            }
+            HGSModel.GeneralResult generalResult = await APIService.BranchUpdate(updatedBranch);
+            @ViewData["Response"] = generalResult.Message;
             return View();
         }
     }

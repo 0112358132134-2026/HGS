@@ -6,21 +6,21 @@ namespace HGSAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PatientController : Controller
+    public class BranchController : Controller
     {
         private readonly HgsContext _context = new();
 
         [Route("GetList")]
         [HttpGet]
-        public async Task<IEnumerable<Patient>> GetList()
+        public async Task<IEnumerable<Branch>> GetList()
         {
-            IEnumerable<Patient> patients = await _context.Patients.ToListAsync();
-            return patients;
+            IEnumerable<Branch> branches = await _context.Branches.ToListAsync();
+            return branches;
         }
 
         [Route("Set")]
         [HttpPost]
-        public async Task<HGSModel.GeneralResult> Set(Models.Patient newPatient)
+        public async Task<HGSModel.GeneralResult> Set(Branch newBranch)
         {
             HGSModel.GeneralResult generalResult = new()
             {
@@ -30,9 +30,9 @@ namespace HGSAPI.Controllers
 
             try
             {
-                if (!_context.Patients.Any(c => c.Dpi == newPatient.Dpi))
+                if (!_context.Branches.Any(c => c.Municipality.ToLower() == newBranch.Municipality.ToLower()))
                 {
-                    _context.Patients.Add(newPatient);
+                    _context.Branches.Add(newBranch);
                     await _context.SaveChangesAsync();
                     generalResult.Result = true;
                     generalResult.Message = "Success";
@@ -47,14 +47,14 @@ namespace HGSAPI.Controllers
 
         [Route("Get/{id}")]
         [HttpGet]
-        public async Task<Patient?> Get(int id)
+        public async Task<Branch?> Get(int id)
         {
-            return await _context.Patients.FindAsync(id);
+            return await _context.Branches.FindAsync(id);
         }
 
         [Route("Update")]
         [HttpPut]
-        public async Task<HGSModel.GeneralResult> Update(Models.Patient updatedPatient)
+        public async Task<HGSModel.GeneralResult> Update(Branch updatedBranch)
         {
             HGSModel.GeneralResult generalResult = new()
             {
@@ -64,18 +64,18 @@ namespace HGSAPI.Controllers
 
             try
             {
-                var patient = await _context.Patients.FindAsync(updatedPatient.Id);
-                if (patient != null)
+                if (!_context.Branches.Any(c => c.Municipality.ToLower() == updatedBranch.Municipality.ToLower() && c.Id != updatedBranch.Id))
                 {
-                    patient.Name = updatedPatient.Name;
-                    patient.Lastname = updatedPatient.Lastname;
-                    patient.Birthdate = updatedPatient.Birthdate;
-                    patient.Observations = updatedPatient.Observations;
+                    var branch = await _context.Branches.FindAsync(updatedBranch.Id);
+                    if (branch != null)
+                    {
+                        branch.Municipality = updatedBranch.Municipality;
 
-                    _context.Patients.Update(patient);
-                    await _context.SaveChangesAsync();
-                    generalResult.Result = true;
-                    generalResult.Message = "Success";
+                        _context.Branches.Update(branch);
+                        await _context.SaveChangesAsync();
+                        generalResult.Result = true;
+                        generalResult.Message = "Success";
+                    }
                 }
             }
             catch (Exception)

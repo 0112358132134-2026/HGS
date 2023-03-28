@@ -1,0 +1,69 @@
+﻿.title {
+    padding: 20px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    border-bottom: 5px solid #000;
+}
+
+.control-label {
+    color: #FFF;
+    font-weight: bold;
+}
+
+.form-control {
+    border: none;
+    border-bottom: 2px solid #FFF;
+    border-radius: 0px;
+    background: transparent;
+    color: #FFF;
+}
+
+    .form-control::placeholder {
+        color: #FFF;
+    }
+
+    .form-control:focus {
+        background: transparent;
+        color: #FFF;
+    }
+
+.formContainer {
+    width: 450px;
+    padding: 50px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    background-color: #b80f22;
+}
+
+.information {
+    padding: 30px;
+    text-align: justify;
+    font-size: 25px;
+}
+
+.warning-message {
+    color: #000;
+}
+
+.col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 5px solid #000;
+}
+
+/*Only for Areasucursal Model*/
+
+.select {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    text-transform: capitalize;
+    color: #FFF;
+    background: #292929;
+    text-align: center;
+}
+/**/

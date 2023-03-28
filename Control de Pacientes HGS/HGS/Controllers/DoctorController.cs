@@ -1,35 +1,23 @@
 ﻿using HGS.Models;
+using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HGS.Controllers
 {
     public class DoctorController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> List()
         {
-            return View();
+            IEnumerable<HGSModel.Doctor> doctors = await APIService.DoctorGetList();
+            return View(doctors);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            SelectListItem();
-            return View();
+            HGSModel.Doctor doctor = await APIService.DoctorGetS();
+            return View(doctor);
         }
-
-        #region Functions
-        public void SelectListItem() 
-        {
-            HgsContext _HGSContext = new();
-
-            ViewBag.SpecialtyId = (from c in _HGSContext.Specialities
-                                   select new SelectListItem
-                                   {
-                                       Value = c.Name,
-                                       Text = c.Name
-                                   }).ToList();
-        }
-        #endregion
     }
 }

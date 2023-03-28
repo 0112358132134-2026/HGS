@@ -30,9 +30,9 @@
     </div>
 </div>
 
-@if (@ViewData["Result"] != null)
+@if (@ViewData["Response"] != null)
 {
-    @if (@ViewData["Result"].Equals("OK"))
+    @if (@ViewData["Response"].Equals("Success"))
     {
         <script>
             function Error() {
@@ -40,11 +40,19 @@
             }
         </script>
     }  
-    else
+    else if (@ViewData["Response"].Equals("Unsuccessfully"))
     {
         <script>
             function Error() {
-                Swal.fire('Error', '¡Esta área ya ha sido ingresada!', 'error');
+                Swal.fire('Advertencia', '¡Esta área ya ha sido ingresada!', 'info');
+            }
+        </script>
+    }
+    else if (@ViewData["Response"].Equals("Error"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
             }
         </script>
     }
