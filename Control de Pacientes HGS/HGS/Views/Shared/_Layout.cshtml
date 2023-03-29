@@ -24,10 +24,10 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Patient" asp-action="List">Pacientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Branch" asp-action="List">Municipios</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Area" asp-action="List">Áreas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Area" asp-action="List">Áreas</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Branch" asp-action="List">Sucursales</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Speciality" asp-action="List">Especialidades</a>
@@ -85,6 +85,14 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        //Script que impide el uso del botón atrás del navegador
+        window.location.hash = "no-back-button";
+        window.location.hash = "Again-No-back-button";
+        window.onhashchange = function () { window.location.hash = ""; }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

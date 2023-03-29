@@ -1,40 +1,41 @@
-﻿<link rel="stylesheet" href="~/css/createView.css" asp-append-version="true" />
-@model HGSModel.Doctor
+﻿@model HGSModel.Doctor
 
 @{
-    ViewData["Title"] = "Añadir Doctor";
+    ViewData["Title"] = "Editar Doctor";
 }
 
-<div class="title">AÑADIR DOCTOR</div>
+<div class="title">EDITAR DOCTOR</div>
 
 <div class="row">
-    <div class="col">
-        <div class="formContainer">
-            <form asp-action="Create">
+    <div class="col" style="display:flex;align-items:center;justify-content:center;">
+        <div class="data">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
                 <div class="form-group">
                     <label asp-for="CollegiateNumber" class="control-label">NÚMERO DE COLEGIADO</label>
-                    <input asp-for="CollegiateNumber" placeholder="Ingrese número de colegiado del doctor" class="form-control" />
+                    <input asp-for="CollegiateNumber" readonly placeholder="Ingrese número de colegiado del doctor" class="form-control" />
                     <span asp-validation-for="CollegiateNumber" class="warning-message"></span>
                 </div>
                 @*<div class="form-group mt-3">
-                    <label asp-for="User" class="control-label">USUARIO</label>
-                    <input asp-for="User" placeholder="Ingrese nombre de usuario del doctor" class="form-control" />
-                    <span asp-validation-for="User" class="warning-message"></span>
+                <label asp-for="User" class="control-label">USUARIO</label>
+                <input asp-for="User" placeholder="Ingrese nombre de usuario del doctor" class="form-control" />
+                <span asp-validation-for="User" class="warning-message"></span>
                 </div>*@
                 <div class="form-group mt-3">
                     <label asp-for="Password" class="control-label">CONTRASEÑA</label>
-                    <input asp-for="Password" type="password" placeholder="Ingrese contraseña del doctor" class="form-control" />
+                    <input asp-for="Password" placeholder="Ingrese contraseña del doctor" class="form-control" />
                     <span asp-validation-for="Password" class="warning-message"></span>
                 </div>
                 <div class="form-group mt-3">
-                    <label asp-for="ConfirmedPassword" class="control-label">CONFIRMAR CONTRASEÑA</label>
-                    <input asp-for="ConfirmedPassword" type="password" placeholder="Confirme contraseña del doctor" class="form-control" />
+                    <label asp-for="ConfirmedPassword" class="control-label">CONFIMAR CONTRASEÑA</label>
+                    <input asp-for="ConfirmedPassword"  placeholder="Confirme contraseña del doctor" class="form-control" />
                     <span asp-validation-for="ConfirmedPassword" class="warning-message"></span>
                 </div>
                 <div class="form-group mt-3">
                     <label asp-for="Dpi" class="control-label">DPI</label>
-                    <input asp-for="Dpi" placeholder="Ingrese DPI del doctor" class="form-control" />
+                    <input asp-for="Dpi" readonly placeholder="Ingrese DPI del doctor" class="form-control" />
                     <span asp-validation-for="Dpi" class="warning-message"></span>
                 </div>
                 <div class="form-group mt-3">
@@ -57,26 +58,11 @@
                     <select asp-for="SpecialtyId" class="select" asp-items="@Model.Specialities"></select>
                 </div>
                 <div class="form-group d-grid gap-2 mt-3">
-                    <input type="submit" value="Añadir Doctor" class="btn btn-light" />
+                    <input type="submit" value="Guardar Cambios" class="btn btn-light" />
                 </div>
             </form>
         </div>
     </div>
-
-    <div class="col" style="flex-direction:column;padding: 30px;">
-        <div class="information">
-            Acá puede agregar un paciente al sistema. En el espacio de
-            "observaciones" puedes añadir algún aspecto que se considere relevante conocer acerca
-            del paciente (Ej. Padece de dolores de cabeza, hipertensión). Si deseas saber si el paciente ya está
-            en el sistema, puedes dar click en el botón "Regresar".
-        </div>
-        <div>
-            <a asp-action="List">
-                <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
-            </a>
-        </div>
-    </div>
-
 </div>
 
 @if (@ViewData["Response"] != null)
@@ -93,7 +79,7 @@
     {
         <script>
             function Error() {
-                Swal.fire('OK', '¡Doctor ingresado existosamente!', 'success');
+                Swal.fire('OK', '¡Doctor modificado existosamente!', 'success');
             }
         </script>
     }
@@ -102,14 +88,6 @@
         <script>
             function Error() {
                 Swal.fire('Advertencia', '¡Este Doctor ya ha sido ingresado!', 'info');
-            }
-        </script>
-    }
-    else if (@ViewData["Response"].ToString().Equals("IsPatient"))
-    {
-        <script>
-            function Error() {
-                Swal.fire('Advertencia', 'Un Paciente no puede ser Doctor', 'info');
             }
         </script>
     }
@@ -123,6 +101,53 @@
     }
 }
 
+<style type="text/css">
+    .title {
+        padding: 20px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+        border-bottom: 5px solid #000;
+    }
+
+    .control-label {
+        color: #FFF;
+        font-weight: bold;
+    }
+
+    .select {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
+        border: none;
+        text-transform: capitalize;
+        color: #fff;
+        background: #292929;
+        text-align: center;
+    }
+
+    .data {
+        width: 550px;
+        padding: 50px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        background-color: #FE903F;
+    }
+
+    .col {
+        border-bottom: 5px solid #000;
+    }
+</style>
+
+<div style="padding: 30px;">
+    <a asp-action="List">
+        <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+    </a>
+</div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,0 +1,76 @@
+﻿@model HGSModel.Doctor
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<div class="title">DETALLES DEL DOCTOR</div>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            NÚMERO DE COLEGIADO
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.CollegiateNumber)
+        </dd>
+        <dt class="col-sm-4">
+            USUARIO
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.User)
+        </dd>
+        <dt class="col-sm-4">
+            CONTRASEÑA
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class="col-sm-4">
+            DPI
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Dpi)
+        </dd>
+        <dt class="col-sm-4">
+            NOMBRE
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-4">
+            APELLIDO
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+        <dt class="col-sm-4">
+            FECHA DE NACIMIENTO
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Birthdate)
+        </dd>
+        <dt class="col-sm-4">
+            ESPECIALIDAD
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.SpecialtyName)
+        </dd>
+    </dl>
+</div>
+
+<hr />
+
+<div>
+    <a asp-action="List">
+        <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+    </a>
+</div>
+
+<style type="text/css">
+    .title {
+        font-size: 30px;
+        font-weight: bold;
+    }
+</style>

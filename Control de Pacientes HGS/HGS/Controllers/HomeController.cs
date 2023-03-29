@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HGS.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
 {
@@ -18,13 +19,13 @@ namespace HGS.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login() 
-        { 
+        public IActionResult Login()
+        {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password, string checkbox)
+        public async Task<IActionResult> Login(string username, string password, string checkbox)
         {
             if (checkbox != null)
             {
@@ -34,13 +35,34 @@ namespace HGS.Controllers
                 }
                 else
                 {
-                    @ViewData["Response"] = "Incorrect";
+                    @ViewData["Response"] = "IncorrectAdmin";
                     return View();
                 }
             }
 
             //Validar en BD si el Dr. existe
-            return View("Index");
+            HGSModel.Doctor aDoctor = new()
+            {
+                CollegiateNumber = "100000000",
+                User = username,
+                Password = password,
+                ConfirmedPassword = password,
+                Dpi = "1000000000000",
+                Name = "ABC",
+                Lastname = "ABC"
+            };
+
+            HGSModel.GeneralResult generalResult = await APIService.DoctorExists(aDoctor);
+
+            if (generalResult.Message != null)
+            {
+                if (generalResult.Message.Equals("Correct"))
+                {
+                    return View("Index");
+                }
+                @ViewData["Response"] = generalResult.Message;
+            }
+            return View();
         }
 
         [HttpGet]

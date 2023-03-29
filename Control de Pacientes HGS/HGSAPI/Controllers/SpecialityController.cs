@@ -8,12 +8,7 @@ namespace HGSAPI.Controllers
     [Route("[controller]")]
     public class SpecialityController : Controller
     {
-        private readonly HgsContext _context;
-
-        public SpecialityController()
-        {
-            _context = new HgsContext();
-        }
+        private readonly HgsContext _context = new();
 
         [Route("GetList")]
         [HttpGet]

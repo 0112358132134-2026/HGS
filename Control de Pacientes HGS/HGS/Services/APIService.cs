@@ -624,6 +624,117 @@ namespace HGS.Services
                 throw new Exception(response.StatusCode.ToString());
             }
         }
+
+        // Inserta un Doctor
+        public static async Task<HGSModel.GeneralResult> DoctorSet(HGSModel.Doctor object_to_serialize)
+        {
+            var json_ = JsonConvert.SerializeObject(object_to_serialize);
+            var content = new StringContent(json_, Encoding.UTF8, "application/json");
+
+            HttpClientHandler clientHandler = new()
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            HttpClient httpClient = new(clientHandler)
+            {
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            HttpResponseMessage response = await httpClient.PostAsync(baseurl + "Doctor/Set", content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<HGSModel.GeneralResult>(await response.Content.ReadAsStringAsync());
+            }
+            return new()
+            {
+                Message = "Error"
+            };
+        }
+
+        // Devuelve un Doctor
+        public static async Task<HGSModel.Doctor> DoctorGet(int id)
+        {
+            HttpClientHandler clientHandler = new()
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            HttpClient httpClient = new(clientHandler)
+            {
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            var response = await httpClient.GetAsync(baseurl + "Doctor/Get/" + id);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<HGSModel.Doctor>(await response.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                throw new Exception(response.StatusCode.ToString());
+            }
+        }
+
+        // Edita un Doctor
+        public static async Task<HGSModel.GeneralResult> DoctorUpdate(HGSModel.Doctor object_to_serialize)
+        {
+            var json_ = JsonConvert.SerializeObject(object_to_serialize);
+            var content = new StringContent(json_, Encoding.UTF8, "application/json");
+
+            HttpClientHandler clientHandler = new()
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            HttpClient httpClient = new(clientHandler)
+            {
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            var response = await httpClient.PutAsync(baseurl + "Doctor/Update", content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<HGSModel.GeneralResult>(await response.Content.ReadAsStringAsync());
+            }
+            return new()
+            {
+                Message = "Error"
+            };
+        }
+        #endregion
+
+        #region Home
+        public static async Task<HGSModel.GeneralResult> DoctorExists(HGSModel.Doctor object_to_serialize)
+        {
+            var json_ = JsonConvert.SerializeObject(object_to_serialize);
+            var content = new StringContent(json_, Encoding.UTF8, "application/json");
+
+            HttpClientHandler clientHandler = new()
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            HttpClient httpClient = new(clientHandler)
+            {
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            HttpResponseMessage response = await httpClient.PostAsync(baseurl + "Home/DoctorExists", content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<HGSModel.GeneralResult>(await response.Content.ReadAsStringAsync());
+            }
+            return new()
+            {
+                Message = "Error"
+            };
+        }
+
         #endregion
     }
 }

@@ -17,6 +17,9 @@ namespace HGSModel
         [Required(ErrorMessage = "Ingrese la contraseña del Doctor")]
         public string Password { get; set; } = null!;
 
+        [Required(ErrorMessage = "Verifique la contraseña del Doctor")]
+        public string ConfirmedPassword { get; set; } = null!;
+
         [Required(ErrorMessage = "Ingrese el DPI del Doctor")]
         [RegularExpression(@"^[1-9]\d{12}$", ErrorMessage = "Ingrese un DPI válido")]
         public string Dpi { get; set; } = null!;
@@ -34,7 +37,7 @@ namespace HGSModel
 
         public string? SpecialtyName { get; set; }
 
-        public virtual Speciality Specialty { get; set; } = null!;
+        public virtual Speciality? Specialty { get; set; }
 
         public List<SelectListItem>? Specialities { get; set; }
     }

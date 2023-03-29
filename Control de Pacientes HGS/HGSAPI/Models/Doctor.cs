@@ -25,5 +25,5 @@ public partial class Doctor
 
     public virtual ICollection<Bedpatient> Bedpatients { get; } = new List<Bedpatient>();
 
-    public virtual Speciality Specialty { get; set; } = null!;
+    public virtual Speciality? Specialty { get; set; }
 }
