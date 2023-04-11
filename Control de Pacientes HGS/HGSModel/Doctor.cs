@@ -36,9 +36,7 @@ namespace HGSModel
         public int SpecialtyId { get; set; }
 
         public string? SpecialtyName { get; set; }
-
-        public virtual Speciality? Specialty { get; set; }
-
+        
         public List<SelectListItem>? Specialities { get; set; }
     }
 }

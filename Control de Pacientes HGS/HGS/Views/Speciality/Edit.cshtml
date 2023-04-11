@@ -1,4 +1,5 @@
-﻿@model HGS.Models.Speciality
+﻿<link rel="stylesheet" href="~/css/edit.css" asp-append-version="true" />
+@model HGSModel.Speciality
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,7 +8,7 @@
 <div class="title">EDITAR ESPECIALIDAD</div>
 
 <div class="row">
-    <div class="col" style="display:flex;align-items:center;justify-content:center;">
+    <div class="col">
         <div class="data">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -23,6 +24,12 @@
             </form>            
         </div>        
     </div>
+</div>
+
+<div style="padding: 30px;">
+    <a asp-action="List">
+        <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+    </a>
 </div>
 
 @if (@ViewData["Response"] != null)
@@ -52,57 +59,6 @@
         </script>
     }
 }
-
-<style type="text/css">
-    .title {
-        padding: 20px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: bold;
-        border-bottom: 5px solid #000;
-    }
-    .control-label {
-        color: #FFF;
-        font-weight: bold;
-    }
-    .form-control {
-        border: none;
-        border-bottom: 2px solid #FFF;
-        border-radius: 0px;
-        background: transparent;
-        color: #FFF;
-    }
-    .form-control:read-only {
-        background: transparent;
-        color: #000;
-    }
-    .form-control::placeholder {
-        color: #FFF;
-    }
-    .form-control:focus {
-        background: transparent;
-        color: #FFF;
-    }
-    .data {
-        width: 550px;
-        padding: 50px;
-        margin-top: 40px;
-        margin-bottom: 40px;
-        background-color: #FE903F;
-    }
-    .warning-message {
-        color: #000;
-    }
-    .col {
-        border-bottom: 5px solid #000;
-    }
-</style>
-
-<div style="padding: 30px;">
-    <a asp-action="List">
-        <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
-    </a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}    

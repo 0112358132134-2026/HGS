@@ -66,4 +66,34 @@
     background: #292929;
     text-align: center;
 }
-/**/
+
+.mi-selector {
+    width: 100% !important;
+}
+
+/*Only for Bedpatient Model*/
+
+.metaDataContainer {
+    padding: 30px;
+    background: #b80f22;
+    margin-top: 30px;    
+    border-radius: 10px;
+    color: #FFF
+}
+.titleMetaData {
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+}
+
+.form-control-complement {
+    border: none;
+    border-bottom: 2px solid #FFF;
+    border-radius: 0px;
+    background: transparent;
+    color: #FFF;
+}
+
+#metaDataPatient {
+    background: #000;
+}

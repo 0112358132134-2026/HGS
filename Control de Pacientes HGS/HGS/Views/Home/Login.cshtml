@@ -9,6 +9,7 @@
     <title>@ViewData["Title"] - HGS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="icon" href="~/logo.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -41,8 +42,9 @@
         </form>
         <div class="linksContainer">
             <div>
-                <a asp-controller="Patient" asp-action="List" class="link">Solo soy un visitante</a>
+                <a asp-controller="Visitant" asp-action="Index" class="link">Consultar el estado de un Paciente</a>
             </div>
+            <hr />
             <div>
                 <a asp-controller="Home" asp-action="About" class="link">Acerca de nosotros</a>
             </div>

@@ -1,0 +1,39 @@
+﻿body {
+    background-image: url("../images/general/visitant.jpg");
+    background-size: cover;
+}
+
+.searchContainer {
+    background-color: #b80f22;
+    padding: 30px;
+    width: 500px;    
+    color: #FFF;
+    text-align: center;
+}
+
+.control-label {
+    font-weight: bold;    
+    font-size: 30px;
+}
+
+.warning-message {
+    color: #000;
+}
+
+.PatientMetadata {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 30px;
+    border-bottom: 5px solid #000;
+    border-top: 5px solid #000;
+    text-align: center;
+}
+
+.detailTitle {
+    color: #b80f22;
+    font-weight: bold;
+    font-size: 30px;
+    border-bottom: 5px solid #b80f22;
+    margin-bottom: 20px;
+    width: 150px;
+}

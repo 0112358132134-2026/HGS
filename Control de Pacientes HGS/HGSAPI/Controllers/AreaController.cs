@@ -12,19 +12,26 @@ namespace HGSAPI.Controllers
 
         [Route("GetList")]
         [HttpGet]
-        public async Task<IEnumerable<Area>> GetList()
+        public async Task<IEnumerable<HGSModel.Area>> GetList()
         {
-            IEnumerable<Area> areas = await _context.Areas.ToListAsync();
+            IEnumerable<HGSModel.Area> areas = await
+                (from a in _context.Areas
+                 select new HGSModel.Area
+                 {
+                     Id = a.Id,
+                     Name = a.Name,
+                     Description = a.Description
+                 }).ToListAsync();
+
             return areas;
         }
 
         [Route("Set")]
         [HttpPost]
-        public async Task<HGSModel.GeneralResult> Set(Area newArea)
+        public async Task<HGSModel.GeneralResult> Set(HGSModel.Area newArea)
         {
             HGSModel.GeneralResult generalResult = new()
             {
-                Result = false,
                 Message = "Unsuccessfully"
             };
 
@@ -32,9 +39,13 @@ namespace HGSAPI.Controllers
             {
                 if (!_context.Areas.Any(c => c.Name.ToLower() == newArea.Name.ToLower()))
                 {
-                    _context.Areas.Add(newArea);
+                    Area area = new(){ 
+                        Name = newArea.Name,
+                        Description = newArea.Description
+                    };
+
+                    _context.Areas.Add(area);
                     await _context.SaveChangesAsync();
-                    generalResult.Result = true;
                     generalResult.Message = "Success";
                 }
             }
@@ -47,18 +58,26 @@ namespace HGSAPI.Controllers
 
         [Route("Get/{id}")]
         [HttpGet]
-        public async Task<Area?> Get(int id)
+        public async Task<HGSModel.Area?> Get(int id)
         {
-            return await _context.Areas.FindAsync(id);
+            HGSModel.Area area = await
+                (from a in _context.Areas
+                 select new HGSModel.Area
+                 {
+                     Id = a.Id,
+                     Name = a.Name,
+                     Description = a.Description
+                 }).FirstAsync(a => a.Id == id);
+
+            return area;
         }
 
         [Route("Update")]
         [HttpPut]
-        public async Task<HGSModel.GeneralResult> Update(Area updatedArea)
+        public async Task<HGSModel.GeneralResult> Update(HGSModel.Area updatedArea)
         {
             HGSModel.GeneralResult generalResult = new()
             {
-                Result = false,
                 Message = "Unsuccessfully"
             };
 
@@ -74,7 +93,6 @@ namespace HGSAPI.Controllers
 
                         _context.Areas.Update(area);
                         await _context.SaveChangesAsync();
-                        generalResult.Result = true;
                         generalResult.Message = "Success";
                     }
                 }

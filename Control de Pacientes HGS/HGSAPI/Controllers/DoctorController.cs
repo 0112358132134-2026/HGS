@@ -30,6 +30,7 @@ namespace HGSAPI.Controllers
                      Birthdate = D.Birthdate,
                      SpecialtyName = s.Name
                  }).ToListAsync();
+
             return doctors;
         }
 
@@ -60,8 +61,7 @@ namespace HGSAPI.Controllers
         public async Task<HGSModel.GeneralResult> Set(HGSModel.Doctor newDoctor)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -87,8 +87,7 @@ namespace HGSAPI.Controllers
                         };
 
                         _context.Doctors.Add(doctor);
-                        await _context.SaveChangesAsync();
-                        generalResult.Result = true;
+                        await _context.SaveChangesAsync();                        
                         generalResult.Message = "Success";
                     }
                 }
@@ -144,8 +143,7 @@ namespace HGSAPI.Controllers
         public async Task<HGSModel.GeneralResult> Update(HGSModel.Doctor updatedDoctor)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -165,8 +163,7 @@ namespace HGSAPI.Controllers
                         doctor.SpecialtyId = updatedDoctor.SpecialtyId;
 
                         _context.Doctors.Update(doctor);
-                        await _context.SaveChangesAsync();
-                        generalResult.Result = true;
+                        await _context.SaveChangesAsync();                       
                         generalResult.Message = "Success";
                     }
                 }

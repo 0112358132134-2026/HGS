@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />        
     <link rel="stylesheet" href="~/HGS.styles.css" asp-append-version="true" />    
+    <link rel="icon" href="~/logo.ico" type="image/x-icon">
+
 </head>
 <body>
     <header>
@@ -47,11 +49,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Doctor" asp-action="List">Doctores</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Bed" asp-action="List">Camas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Bedpatient" asp-action="List">Citas</a>
+                        </li>
                     </ul>
-                    <form class="d-flex">
+
+                    <li class="dropdown vertical-align">
+                        <button role="button" type="button" class="btn dropdown text-white vertical-align" data-toggle="dropdown" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenu">
+                            <li><a class="dropdown-item" asp-controller="home" asp-action="about">Acerca de</a></li>                            
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" onclick="LogOut()">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+
+                    @*<form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
+                    </form>*@
                 </div>
             </div>
         </nav>
@@ -70,7 +90,7 @@
         .nav-item:hover{
             background-color: #b80f22;
             transform:scale(1.1);
-        }
+        }        
     </style>
 
     <footer class="border-top footer text-muted">
@@ -81,17 +101,17 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script>
-        //Script que impide el uso del botón atrás del navegador
-        window.location.hash = "no-back-button";
-        window.location.hash = "Again-No-back-button";
-        window.onhashchange = function () { window.location.hash = ""; }
-    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

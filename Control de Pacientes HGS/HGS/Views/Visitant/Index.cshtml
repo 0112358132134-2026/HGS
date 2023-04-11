@@ -1,0 +1,107 @@
+﻿@model IEnumerable<HGSModel.Bedpatient>
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Consulta Paciente";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HGS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/visitant.css" asp-append-version="true" />
+    <link rel="icon" href="~/logo.ico" type="image/x-icon">
+</head>
+
+<div class="d-flex align-items-center justify-content-center" style="padding: 100px 30px 30px 30px;">
+    <div class="searchContainer">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">PACIENTE</label>
+                <input name="dpi" placeholder="Ingrese DPI del paciente" class="form-control" />
+            </div>
+            <div class="form-group d-grid gap-2 mt-3">
+                <input type="submit" value="Consultar" class="btn btn-dark" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    <div style="padding: 30px; margin: 30px; background: #FFF; border-radius: 10px;">
+
+        <div class="PatientMetadata">
+            Citas del Paciente: @ViewData["PatientName"] <br>
+            Total de Citas: @ViewData["CountDating"]
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-bordered">
+                    <th>
+                        CAMA
+                    </th>
+                    <th>
+                        MOTIVO
+                    </th>
+                    <th>
+                        ESTADO
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BedId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reason)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Detalles" class="btn btn-dark" /></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<div class="d-flex align-items-center justify-content-center" style="padding: 0px 30px 30px 30px;">
+    <a asp-action="Login" asp-controller="Home">
+        <input type="submit" value="Salir" class="btn btn-danger" style="width:200px;" />
+    </a>
+</div>
+
+@if (@ViewData["Response"] != null)
+{
+    @if (@ViewData["Response"].ToString().Equals("NotExist"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', 'Este Paciente no existe en el Sistema', 'error');
+            }
+        </script>
+    }
+    else if (@ViewData["Response"].ToString().Equals("NoDating"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', 'Este Paciente no ha tenido ninguna Cita', 'error');
+            }
+        </script>
+    }
+}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

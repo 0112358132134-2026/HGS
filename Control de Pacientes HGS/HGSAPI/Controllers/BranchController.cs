@@ -12,19 +12,25 @@ namespace HGSAPI.Controllers
 
         [Route("GetList")]
         [HttpGet]
-        public async Task<IEnumerable<Branch>> GetList()
+        public async Task<IEnumerable<HGSModel.Branch>> GetList()
         {
-            IEnumerable<Branch> branches = await _context.Branches.ToListAsync();
+            IEnumerable<HGSModel.Branch> branches = await
+                (from b in _context.Branches
+                 select new HGSModel.Branch
+                 {
+                     Id = b.Id,
+                     Municipality = b.Municipality
+                 }).ToListAsync();
+
             return branches;
         }
 
         [Route("Set")]
         [HttpPost]
-        public async Task<HGSModel.GeneralResult> Set(Branch newBranch)
+        public async Task<HGSModel.GeneralResult> Set(HGSModel.Branch newBranch)
         {
             HGSModel.GeneralResult generalResult = new()
             {
-                Result = false,
                 Message = "Unsuccessfully"
             };
 
@@ -32,9 +38,13 @@ namespace HGSAPI.Controllers
             {
                 if (!_context.Branches.Any(c => c.Municipality.ToLower() == newBranch.Municipality.ToLower()))
                 {
-                    _context.Branches.Add(newBranch);
+                    Branch branch = new()
+                    {
+                        Municipality = newBranch.Municipality
+                    };
+
+                    _context.Branches.Add(branch);
                     await _context.SaveChangesAsync();
-                    generalResult.Result = true;
                     generalResult.Message = "Success";
                 }
             }
@@ -47,18 +57,25 @@ namespace HGSAPI.Controllers
 
         [Route("Get/{id}")]
         [HttpGet]
-        public async Task<Branch?> Get(int id)
+        public async Task<HGSModel.Branch?> Get(int id)
         {
-            return await _context.Branches.FindAsync(id);
+            HGSModel.Branch branch = await
+                (from b in _context.Branches
+                 select new HGSModel.Branch
+                 {
+                     Id = b.Id,
+                     Municipality = b.Municipality
+                 }).FirstAsync(b => b.Id == id);
+
+            return branch;
         }
 
         [Route("Update")]
         [HttpPut]
-        public async Task<HGSModel.GeneralResult> Update(Branch updatedBranch)
+        public async Task<HGSModel.GeneralResult> Update(HGSModel.Branch updatedBranch)
         {
             HGSModel.GeneralResult generalResult = new()
             {
-                Result = false,
                 Message = "Unsuccessfully"
             };
 
@@ -73,7 +90,7 @@ namespace HGSAPI.Controllers
 
                         _context.Branches.Update(branch);
                         await _context.SaveChangesAsync();
-                        generalResult.Result = true;
+                        
                         generalResult.Message = "Success";
                     }
                 }

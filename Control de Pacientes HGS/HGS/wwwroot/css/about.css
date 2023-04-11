@@ -16,24 +16,7 @@
 }
 
 #colTitle {
-    background: rgb(189, 189, 189);
-    background: linear-gradient(90deg, #EF4C3C 0%, #FCA938 0%, #b80f22 48%, #FFDC4F 100%);
-    background-size: 300% 100%;
-    animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    background: #b80f22;
 }
 
 .title {
@@ -50,7 +33,7 @@
     }
 
 .subTitle {
-    color: #b80f22;
+    color: #000;
     font-size: 60px;
     text-align: center;
     width: 100%;
@@ -68,9 +51,9 @@
 .infoTitle {
     width: 100%;
     text-align: center;
-    background: #EF4C3C;
+    background: #000;
     color: #FFF;
-    border-radius: 5px;
+    padding: 10px;
 }
 
 h1 {
@@ -80,7 +63,7 @@ h1 {
 .info {
     padding: 20px;
     font-size: 20px;    
-    border-bottom: 3px dashed #000;
+    
 }
 
 #firstInfo {

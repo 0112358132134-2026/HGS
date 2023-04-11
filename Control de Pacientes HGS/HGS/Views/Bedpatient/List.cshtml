@@ -1,0 +1,63 @@
+﻿<link rel="stylesheet" href="~/css/listView.css" asp-append-version="true" />
+@model IEnumerable<HGSModel.Bedpatient>
+
+@{
+    ViewData["Title"] = "Citas";
+}
+
+<div class="container">
+    <div class="title">
+        CITAS
+    </div>
+    <div class="addContainer">
+        <div class="addBox">
+            <a asp-action="Create" class="add">+</a>
+        </div>
+        <div class="addText">
+            &larr; Añadir Cita
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped" style="margin-bottom:100px;">
+    <thead>
+        <tr class="table-danger">
+            <th>
+                CAMA
+            </th>
+            <th>
+                PACIENTE
+            </th>
+            <th>
+                MOTIVO
+            </th>
+            <th>
+                ESTADO
+            </th>            
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BedId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reason)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>                
+                <td>                   
+                    <a asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Detalles" class="btn btn-dark" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

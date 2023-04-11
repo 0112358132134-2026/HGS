@@ -1,5 +1,4 @@
-﻿using HGS.Models;
-using HGS.Services;
+﻿using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
@@ -9,7 +8,7 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            IEnumerable<Branch> branches = await APIService.BranchGetList();
+            IEnumerable<HGSModel.Branch>? branches = await APIService<HGSModel.Branch>.GetList("Branch/GetList");
             return View(branches);
         }
 
@@ -20,25 +19,35 @@ namespace HGS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Municipality")] Branch newBranch)
+        public async Task<IActionResult> Create([Bind("Municipality")] HGSModel.Branch newBranch)
         {
-            HGSModel.GeneralResult generalResult = await APIService.BranchSet(newBranch);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Set(newBranch, "Branch/Set");
+
+            if(generalResult != null)
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
+            
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            Branch branch = await APIService.BranchGet(id);
+            HGSModel.Branch? branch = await APIService<HGSModel.Branch>.Get(id, "Branch/Get/");
             return View(branch);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id","Municipality")] Branch updatedBranch)
+        public async Task<IActionResult> Edit([Bind("Id", "Municipality")] HGSModel.Branch updatedBranch)
         {
-            HGSModel.GeneralResult generalResult = await APIService.BranchUpdate(updatedBranch);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Update(updatedBranch, "Branch/Update");
+
+            if(generalResult!= null)
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
+            
             return View();
         }
     }

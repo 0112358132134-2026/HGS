@@ -1,5 +1,4 @@
-﻿using HGS.Models;
-using HGS.Services;
+﻿using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
@@ -9,57 +8,70 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            IEnumerable<HGSModel.Areasucursal> areasucursals = await APIService.AreasucursalGetList();
+            IEnumerable<HGSModel.Areasucursal>? areasucursals = await APIService<HGSModel.Areasucursal>.GetList("Areasucursal/GetList");
             return View(areasucursals);
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGetAB();
+            HGSModel.Areasucursal? areasucursal = await APIService<HGSModel.Areasucursal?>.SpecialGet("Areasucursal/GetAB");
 
-            if (areasucursal.Areas!= null && areasucursal.Branches != null)
+            if (areasucursal != null) 
             {
-                if (!areasucursal.Areas.Any() && areasucursal.Branches.Any())
+                if (areasucursal.Areas != null && areasucursal.Branches != null)
                 {
-                    @ViewData["Response"] = "NoAreas";
+                    if (!areasucursal.Areas.Any() && areasucursal.Branches.Any())
+                    {
+                        @ViewData["Response"] = "NoAreas";
+                    }
+                    else if (areasucursal.Areas.Any() && !areasucursal.Branches.Any())
+                    {
+                        @ViewData["Response"] = "NoBranches";
+                    }
+                    else if (!areasucursal.Areas.Any() && !areasucursal.Branches.Any())
+                    {
+                        @ViewData["Response"] = "NoData";
+                    }
                 }
-                else if (areasucursal.Areas.Any() && !areasucursal.Branches.Any())
-                {
-                    @ViewData["Response"] = "NoBranches";
-                }
-                else if (!areasucursal.Areas.Any() && !areasucursal.Branches.Any())
-                {
-                    @ViewData["Response"] = "NoData";
-                }
+
             }
+
             return View(areasucursal);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("AreaId","BranchId")] Areasucursal newAreasucursal)
+        public async Task<IActionResult> Create([Bind("AreaId", "BranchId")] HGSModel.Areasucursal newAreasucursal)
         {
-            HGSModel.GeneralResult generalResult = await APIService.AreasucursalSet(newAreasucursal);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Set(newAreasucursal, "Areasucursal/Set");
 
-            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGetAB();            
+            if (generalResult != null) 
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
+            
+            HGSModel.Areasucursal? areasucursal = await APIService<HGSModel.Areasucursal?>.SpecialGet("Areasucursal/GetAB");
             return View(areasucursal);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGet(id);            
+            HGSModel.Areasucursal? areasucursal = await APIService<HGSModel.Areasucursal>.Get(id, "Areasucursal/Get/");
             return View(areasucursal);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id","AreaId", "BranchId")] Areasucursal updatedAreasucursal)
+        public async Task<IActionResult> Edit([Bind("Id", "AreaId", "BranchId")] HGSModel.Areasucursal updatedAreasucursal)
         {
-            HGSModel.GeneralResult generalResult = await APIService.AreasucursalUpdate(updatedAreasucursal);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Update(updatedAreasucursal, "Areasucursal/Update");
+
+            if (generalResult != null) 
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
             
-            HGSModel.Areasucursal areasucursal = await APIService.AreasucursalGetAB();
+            HGSModel.Areasucursal? areasucursal = await APIService<HGSModel.Areasucursal>.SpecialGet("Areasucursal/GetAB");
             return View(areasucursal);
         }
     }

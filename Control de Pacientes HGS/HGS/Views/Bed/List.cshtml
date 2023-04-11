@@ -1,0 +1,69 @@
+﻿<link rel="stylesheet" href="~/css/listView.css" asp-append-version="true" />
+@model IEnumerable<HGSModel.Bed>
+
+@{
+    ViewData["Title"] = "Camas";
+}
+
+<div class="container">
+    <div class="title">
+        CAMAS
+    </div>
+    <div class="addContainer">
+        <div class="addBox">
+            <a asp-action="Create" class="add">+</a>
+        </div>
+        <div class="addText">
+            &larr; Añadir Cama
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped" style="margin-bottom:100px;">
+    <thead>
+        <tr class="table-danger">
+            <th>
+                ID
+            </th>
+            <th>
+                TAMAÑO
+            </th>
+            <th>
+                ANOTACIONES
+            </th>
+            <th>
+                ESTADO
+            </th>
+            <th>
+                UBICACIÓN
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Annotations)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AreaSucursalName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><input type="submit" value="Editar" class="btn btn-danger" /></a>                   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

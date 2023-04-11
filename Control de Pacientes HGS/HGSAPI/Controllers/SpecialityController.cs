@@ -12,19 +12,25 @@ namespace HGSAPI.Controllers
 
         [Route("GetList")]
         [HttpGet]
-        public async Task<IEnumerable<Speciality>> GetList()
+        public async Task<IEnumerable<HGSModel.Speciality>> GetList()
         {
-            IEnumerable<Speciality> specialities = await _context.Specialities.ToListAsync();
+            IEnumerable<HGSModel.Speciality> specialities = await
+                (from s in _context.Specialities
+                 select new HGSModel.Speciality
+                 {
+                     Id = s.Id,
+                     Name = s.Name,
+                 }).ToListAsync();
+            
             return specialities;
         }
 
         [Route("Set")]
         [HttpPost]
-        public async Task<HGSModel.GeneralResult> Set(Speciality newSpeciality)
+        public async Task<HGSModel.GeneralResult> Set(HGSModel.Speciality newSpeciality)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -32,9 +38,13 @@ namespace HGSAPI.Controllers
             {
                 if (!_context.Specialities.Any(c => c.Name.ToLower() == newSpeciality.Name.ToLower()))
                 {
-                    _context.Specialities.Add(newSpeciality);
-                    await _context.SaveChangesAsync();
-                    generalResult.Result = true;
+                    Speciality speciality = new()
+                    {
+                        Name = newSpeciality.Name
+                    };
+
+                    _context.Specialities.Add(speciality);
+                    await _context.SaveChangesAsync();                    
                     generalResult.Message = "Success";
                 }
             }
@@ -47,18 +57,25 @@ namespace HGSAPI.Controllers
 
         [Route("Get/{id}")]
         [HttpGet]
-        public async Task<Speciality?> Get(int id)
+        public async Task<HGSModel.Speciality?> Get(int id)
         {
-            return await _context.Specialities.FindAsync(id);
+            HGSModel.Speciality speciality = await
+                (from s in _context.Specialities
+                 select new HGSModel.Speciality
+                 {
+                     Id = s.Id,
+                     Name = s.Name
+                 }).FirstAsync(s => s.Id == id);
+
+            return speciality;
         }
 
         [Route("Update")]
         [HttpPut]
-        public async Task<HGSModel.GeneralResult> Update(Speciality updatedSpeciality)
+        public async Task<HGSModel.GeneralResult> Update(HGSModel.Speciality updatedSpeciality)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -72,8 +89,7 @@ namespace HGSAPI.Controllers
                         speciality.Name = updatedSpeciality.Name;
 
                         _context.Specialities.Update(speciality);
-                        await _context.SaveChangesAsync();
-                        generalResult.Result = true;
+                        await _context.SaveChangesAsync();                        
                         generalResult.Message = "Success";
                     }
                 }

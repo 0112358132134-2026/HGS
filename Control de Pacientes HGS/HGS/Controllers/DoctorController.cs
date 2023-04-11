@@ -1,5 +1,4 @@
-﻿using HGS.Models;
-using HGS.Services;
+﻿using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
@@ -9,37 +8,41 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            IEnumerable<HGSModel.Doctor> doctors = await APIService.DoctorGetList();
+            IEnumerable<HGSModel.Doctor>? doctors = await APIService<HGSModel.Doctor>.GetList("Doctor/GetList");
             return View(doctors);
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            HGSModel.Doctor doctor = await APIService.DoctorGetS();
+            HGSModel.Doctor? doctor = await APIService<HGSModel.Doctor>.SpecialGet("Doctor/GetS");
             return View(doctor);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("CollegiateNumber","User","Password","ConfirmedPassword","Dpi","Name","Lastname","Birthdate","SpecialtyId")] HGSModel.Doctor newDoctor) 
-        {            
+        public async Task<IActionResult> Create([Bind("CollegiateNumber", "User", "Password", "ConfirmedPassword", "Dpi", "Name", "Lastname", "Birthdate", "SpecialtyId")] HGSModel.Doctor newDoctor)
+        {
             if (!newDoctor.Password.Equals(newDoctor.ConfirmedPassword))
             {
-                @ViewData["Response"] = "InconsistentPassword";                                
+                @ViewData["Response"] = "InconsistentPassword";
             }
             else
             {
                 // Creamos el User del Doctor                
                 newDoctor.User = GenerateUserName(newDoctor.Name, newDoctor.Lastname);
-                HGSModel.GeneralResult generalResult = await APIService.DoctorSet(newDoctor);
-                @ViewData["Response"] = generalResult.Message;
+                HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Set(newDoctor, "Doctor/Set");
+
+                if (generalResult != null)
+                {
+                    @ViewData["Response"] = generalResult.Message;
+                }                
             }
-            
-            HGSModel.Doctor doctor = await APIService.DoctorGetS();
+
+            HGSModel.Doctor? doctor = await APIService<HGSModel.Doctor>.SpecialGet("Doctor/GetS");
             return View(doctor);
         }
 
-        public string GenerateUserName(string name, string lastname) 
+        public string GenerateUserName(string name, string lastname)
         {
             string _name = char.ToUpper(name[0]) + name.Substring(1);
             string _lastname = char.ToUpper(lastname[0]) + lastname.Substring(1);
@@ -49,12 +52,12 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            HGSModel.Doctor doctor = await APIService.DoctorGet(id);
+            HGSModel.Doctor? doctor = await APIService<HGSModel.Doctor>.Get(id, "Doctor/Get/");
             return View(doctor);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id","CollegiateNumber", "User", "Password", "ConfirmedPassword", "Dpi", "Name", "Lastname", "Birthdate", "SpecialtyId")] HGSModel.Doctor updatedDoctor)
+        public async Task<IActionResult> Edit([Bind("Id", "CollegiateNumber", "User", "Password", "ConfirmedPassword", "Dpi", "Name", "Lastname", "Birthdate", "SpecialtyId")] HGSModel.Doctor updatedDoctor)
         {
             if (!updatedDoctor.Password.Equals(updatedDoctor.ConfirmedPassword))
             {
@@ -64,21 +67,23 @@ namespace HGS.Controllers
             {
                 // Creamos el User del Doctor                
                 updatedDoctor.User = GenerateUserName(updatedDoctor.Name, updatedDoctor.Lastname);
-                HGSModel.GeneralResult generalResult = await APIService.DoctorUpdate(updatedDoctor);
-                @ViewData["Response"] = generalResult.Message;
+                HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Update(updatedDoctor, "Doctor/Update");
+
+                if(generalResult != null)
+                {
+                    @ViewData["Response"] = generalResult.Message;
+                }                
             }
 
-            HGSModel.Doctor doctor = await APIService.DoctorGetS();
+            HGSModel.Doctor? doctor = await APIService<HGSModel.Doctor>.SpecialGet("Doctor/GetS");
             return View(doctor);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            HGSModel.Doctor doctor = await APIService.DoctorGet(id);
+            HGSModel.Doctor? doctor = await APIService<HGSModel.Doctor>.Get(id, "Doctor/Get/");
             return View(doctor);
         }
-
-
     }
 }

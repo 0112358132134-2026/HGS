@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HGS.Models;
+﻿namespace HGS.Models;
 
 public partial class Bed
-{
+{    
     public int Id { get; set; }
 
     public int AreaSucursalId { get; set; }

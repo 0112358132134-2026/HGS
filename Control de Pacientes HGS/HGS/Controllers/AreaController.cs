@@ -1,5 +1,4 @@
-﻿using HGS.Models;
-using HGS.Services;
+﻿using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
@@ -9,7 +8,7 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            IEnumerable<Area> areas = await APIService.AreaGetList();
+            IEnumerable<HGSModel.Area>? areas = await APIService<HGSModel.Area>.GetList("Area/GetList");
             return View(areas);
         }
 
@@ -20,25 +19,35 @@ namespace HGS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name,Description")] Area newArea)
+        public async Task<IActionResult> Create([Bind("Name,Description")] HGSModel.Area newArea)
         {
-            HGSModel.GeneralResult generalResult = await APIService.AreaSet(newArea);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult?>.Set(newArea, "Area/Set");
+
+            if(generalResult != null)
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
+            
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            Area area = await APIService.AreaGet(id);
+            HGSModel.Area? area = await APIService<HGSModel.Area>.Get(id, "Area/Get/");
             return View(area);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id","Name,Description")] Area updatedArea)
+        public async Task<IActionResult> Edit([Bind("Id", "Name,Description")] HGSModel.Area updatedArea)
         {
-            HGSModel.GeneralResult generalResult = await APIService.AreaUpdate(updatedArea);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult?>.Update(updatedArea, "Area/Update");
+
+            if(generalResult != null)
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
+            
             return View();
         }
     }

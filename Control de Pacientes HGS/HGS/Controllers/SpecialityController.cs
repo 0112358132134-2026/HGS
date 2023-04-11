@@ -1,5 +1,4 @@
-﻿using HGS.Models;
-using HGS.Services;
+﻿using HGS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
@@ -9,7 +8,7 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            IEnumerable<Speciality> specialities = await APIService.SpecialityGetList();
+            IEnumerable<HGSModel.Speciality>? specialities = await APIService<HGSModel.Speciality>.GetList("Speciality/GetList");
             return View(specialities);
         }
 
@@ -20,25 +19,35 @@ namespace HGS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name")] Speciality newSpeciality)
+        public async Task<IActionResult> Create([Bind("Name")] HGSModel.Speciality newSpeciality)
         {
-            HGSModel.GeneralResult generalResult = await APIService.SpecialitySet(newSpeciality);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Set(newSpeciality, "Speciality/Set");
+
+            if(generalResult != null)
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
+            
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            Speciality speciality = await APIService.SpecialityGet(id);
+            HGSModel.Speciality? speciality = await APIService<HGSModel.Speciality>.Get(id, "Speciality/Get/");
             return View(speciality);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id","Name")] Speciality updatedSpeciality)
+        public async Task<IActionResult> Edit([Bind("Id", "Name")] HGSModel.Speciality updatedSpeciality)
         {
-            HGSModel.GeneralResult generalResult = await APIService.SpecialityUpdate(updatedSpeciality);
-            @ViewData["Response"] = generalResult.Message;
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Update(updatedSpeciality, "Speciality/Update");
+
+            if (generalResult != null)
+            {
+                @ViewData["Response"] = generalResult.Message;
+            }
+
             return View();
         }
     }

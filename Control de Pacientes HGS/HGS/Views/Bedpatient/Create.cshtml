@@ -1,0 +1,226 @@
+﻿<link rel="stylesheet" href="~/css/createView.css" asp-append-version="true" />
+@model HGSModel.Bedpatient
+
+@{
+    ViewData["Title"] = "Añadir Cama Paciente";
+}
+
+<div class="title">AÑADIR CAMA PACIENTE</div>
+
+<div class="row">
+    <div class="col">
+        <div class="formContainer">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="BedId" class="control-label">CAMA</label>
+                    <select asp-for="BedId" class="mi-selector" asp-items="@Model.Beds" onchange="BedChanged('@Url.Action("GetBedJson", "Bedpatient")');"></select>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="PatientId" class="control-label">PACIENTE</label>
+                    <select asp-for="PatientId" class="mi-selector" asp-items="@Model.Patients" onchange="PatientChanged('@Url.Action("GetPatientJson", "Bedpatient")');"></select>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="Reason" class="control-label">MOTIVO</label>
+                    <input asp-for="Reason" placeholder="Ingrese el motivo del paciente" class="form-control" />
+                    <span asp-validation-for="Reason" class="warning-message"></span>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="DoctorId" class="control-label">DOCTOR</label>
+                    <select asp-for="DoctorId" class="mi-selector" asp-items="@Model.Doctors" onchange="DoctorChanged('@Url.Action("GetDoctorJson", "Bedpatient")');"></select>
+                </div>
+                <div class="form-group mt-3">
+                    <label asp-for="StartDate" class="control-label">FECHA INGRESO</label>
+                    <div style="color:#FFF">
+                        @DateTime.Now
+                    </div>                    
+                    <span asp-validation-for="StartDate" class="warning-message"></span>
+                </div>                
+                <div class="form-group d-grid gap-2 mt-3">
+                    <input type="submit" value="Añadir Cama Paciente" class="btn btn-light" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col" style="flex-direction:column;padding: 30px;">
+        <div class="information">
+            Una Cama Paciente...
+        </div>
+        <div>
+            <a asp-action="List">
+                <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+            </a>
+        </div>
+    </div>
+
+    @**@
+
+    <div class="metaDataContainer">
+
+        <div class="titleMetaData">
+            CAMA
+        </div>        
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-6" style="text-align: right">
+                TAMAÑO
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Bed.Size" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                UBICACIÓN
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Bed.AreaSucursalName" class="form-control-complement" readonly />
+            </dd>   
+            <dt class="col-sm-6" style="text-align: right">
+                ANOTACIONES
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Bed.Annotations" class="form-control-complement" readonly />
+            </dd>
+        </dl>
+    </div>
+
+    <div class="metaDataContainer" id="metaDataPatient">
+
+        <div class="titleMetaData">
+            PACIENTE
+        </div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-6" style="text-align: right">
+                DPI
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Patient.Dpi" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                NOMBRE
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Patient.Name" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                APELLIDO
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Patient.Lastname" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                FECHA DE NACIMIENTO
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Patient.Birthdate" type="date" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                OBSERVACIONES
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Patient.Observations" class="form-control-complement" readonly />
+            </dd>
+        </dl>
+    </div>
+
+     <div class="metaDataContainer">
+
+        <div class="titleMetaData">
+            DOCTOR
+        </div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-6" style="text-align: right">
+                NO. COLEGIADO
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Doctor.CollegiateNumber" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                DPI
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Doctor.Dpi" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                NOMBRE
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Doctor.Name" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                APELLIDO
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Doctor.Lastname" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                FECHA DE NACIMIENTO
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Doctor.Birthdate" type="date" class="form-control-complement" readonly />
+            </dd>
+            <dt class="col-sm-6" style="text-align: right">
+                ESPECIALIDAD
+            </dt>
+            <dd class="col-sm-6">
+                <input asp-for="Doctor.SpecialtyName" class="form-control-complement" readonly />
+            </dd>
+        </dl>
+    </div>
+
+    @**@
+
+</div>
+
+@if (@ViewData["Response"] != null)
+{
+    @if (@ViewData["Response"].ToString().Equals("Success"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('OK', '¡Cama Paciente ingresada existosamente!', 'success');
+            }
+        </script>
+    }
+    else if (@ViewData["Response"].ToString().Equals("PatientAppointment"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Advertencia', '¡Este Paciente ya tiene una cita', 'info');
+            }
+        </script>
+    }
+    else if (@ViewData["Response"].ToString().Equals("BusyDoctor"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Advertencia', '¡Este Doctor ya atiende 2 citas', 'info');
+            }
+        </script>
+    }
+    else if (@ViewData["Response"].ToString().Equals("Error"))
+    {
+        <script>
+            function Error() {
+                Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
+            }
+        </script>
+    }
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script src="~/js/bedpatient.js"></script>
+    }
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $(document).ready(function () {
+                $('.mi-selector').select2();
+            });
+        });
+    </script>
+}

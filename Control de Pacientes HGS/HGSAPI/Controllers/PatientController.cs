@@ -12,19 +12,29 @@ namespace HGSAPI.Controllers
 
         [Route("GetList")]
         [HttpGet]
-        public async Task<IEnumerable<Patient>> GetList()
+        public async Task<IEnumerable<HGSModel.Patient>> GetList()
         {
-            IEnumerable<Patient> patients = await _context.Patients.ToListAsync();
+            IEnumerable<HGSModel.Patient> patients = await
+                (from p in _context.Patients
+                 select new HGSModel.Patient
+                 {
+                     Id = p.Id,
+                     Dpi = p.Dpi,
+                     Name = p.Name,
+                     Lastname = p.Lastname,
+                     Birthdate = p.Birthdate,
+                     Observations = p.Observations
+                 }).ToListAsync();
+           
             return patients;
         }
 
         [Route("Set")]
         [HttpPost]
-        public async Task<HGSModel.GeneralResult> Set(Models.Patient newPatient)
+        public async Task<HGSModel.GeneralResult> Set(HGSModel.Patient newPatient)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -32,9 +42,17 @@ namespace HGSAPI.Controllers
             {
                 if (!_context.Patients.Any(c => c.Dpi == newPatient.Dpi))
                 {
-                    _context.Patients.Add(newPatient);
-                    await _context.SaveChangesAsync();
-                    generalResult.Result = true;
+                    Patient patient = new()
+                    {
+                        Dpi = newPatient.Dpi,
+                        Name = newPatient.Name,
+                        Lastname = newPatient.Lastname,
+                        Birthdate = newPatient.Birthdate,
+                        Observations = newPatient.Observations
+                    };
+
+                    _context.Patients.Add(patient);
+                    await _context.SaveChangesAsync();                    
                     generalResult.Message = "Success";
                 }
             }
@@ -47,18 +65,29 @@ namespace HGSAPI.Controllers
 
         [Route("Get/{id}")]
         [HttpGet]
-        public async Task<Patient?> Get(int id)
+        public async Task<HGSModel.Patient?> Get(int id)
         {
-            return await _context.Patients.FindAsync(id);
+            HGSModel.Patient patient = await
+                (from p in _context.Patients
+                 select new HGSModel.Patient
+                 {
+                     Id = p.Id,
+                     Dpi = p.Dpi,
+                     Name = p.Name,
+                     Lastname = p.Lastname,
+                     Birthdate = p.Birthdate,
+                     Observations = p.Observations
+                 }).FirstAsync(p => p.Id == id);
+
+            return patient;
         }
 
         [Route("Update")]
         [HttpPut]
-        public async Task<HGSModel.GeneralResult> Update(Models.Patient updatedPatient)
+        public async Task<HGSModel.GeneralResult> Update(HGSModel.Patient updatedPatient)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -73,8 +102,7 @@ namespace HGSAPI.Controllers
                     patient.Observations = updatedPatient.Observations;
 
                     _context.Patients.Update(patient);
-                    await _context.SaveChangesAsync();
-                    generalResult.Result = true;
+                    await _context.SaveChangesAsync();                    
                     generalResult.Message = "Success";
                 }
             }

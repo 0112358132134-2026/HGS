@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks.Dataflow;
 
 namespace HGSAPI.Controllers
 {
@@ -24,8 +23,10 @@ namespace HGSAPI.Controllers
                  {
                      Id = AS.Id,
                      AreaName = a.Name,
-                     BranchName = s.Municipality
+                     BranchName = s.Municipality,
+                     BedCount = _context.Beds.Count(b => b.AreaSucursalId == AS.Id)
                  }).ToListAsync();
+
             return areasucursals;
         }
 
@@ -58,30 +59,18 @@ namespace HGSAPI.Controllers
                 {
                     Value = s.Id.ToString(),
                     Text = s.Municipality
-                }).ToList(),
-
-                //Movie = (from m in _context.Movies
-                //         where m.Id == movies.First().Id
-                //         select new ClasificacionPeliculasModel.Movie
-                //         {
-                //             Title = m.Title,
-                //             ReleaseDate = m.ReleaseDate,
-                //             Duration = m.Duration,
-                //             Director = m.Director,
-                //             Actors = m.Actors
-
-                //         }).First()
+                }).ToList(),               
             };
+
             return areasucursal;
         }
 
         [Route("Set")]
         [HttpPost]
-        public async Task<HGSModel.GeneralResult> Set(Areasucursal newAreasucursal)
+        public async Task<HGSModel.GeneralResult> Set(HGSModel.Areasucursal newAreasucursal)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -89,9 +78,14 @@ namespace HGSAPI.Controllers
             {
                 if (!_context.Areasucursals.Any(c => c.AreaId == newAreasucursal.AreaId && c.BranchId == newAreasucursal.BranchId))
                 {
-                    _context.Areasucursals.Add(newAreasucursal);
-                    await _context.SaveChangesAsync();
-                    generalResult.Result = true;
+                    Areasucursal areasucursal = new()
+                    {
+                        AreaId = newAreasucursal.AreaId,
+                        BranchId = newAreasucursal.BranchId
+                    };
+
+                    _context.Areasucursals.Add(areasucursal);
+                    await _context.SaveChangesAsync();                    
                     generalResult.Message = "Success";
                 }
             }
@@ -151,11 +145,10 @@ namespace HGSAPI.Controllers
 
         [Route("Update")]
         [HttpPut]
-        public async Task<HGSModel.GeneralResult> Update(Areasucursal updatedAreasucursal)
+        public async Task<HGSModel.GeneralResult> Update(HGSModel.Areasucursal updatedAreasucursal)
         {
             HGSModel.GeneralResult generalResult = new()
-            {
-                Result = false,
+            {                
                 Message = "Unsuccessfully"
             };
 
@@ -170,8 +163,7 @@ namespace HGSAPI.Controllers
                         areasucursal.BranchId = updatedAreasucursal.BranchId;
 
                         _context.Areasucursals.Update(areasucursal);
-                        await _context.SaveChangesAsync();
-                        generalResult.Result = true;
+                        await _context.SaveChangesAsync();                        
                         generalResult.Message = "Success";
                     }
                 }

@@ -1,0 +1,208 @@
+﻿@model HGSModel.Bedpatient
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Detalles";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HGS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/visitant.css" asp-append-version="true" />
+    <link rel="icon" href="~/logo.ico" type="image/x-icon">
+</head>
+
+<div style="padding: 30px;">
+
+    <div class="title">DETALLES DE LA CITA</div>
+
+    <div>
+        <hr />
+        <div class="detailTitle">
+            CITA
+        </div>
+        <dl class="row">
+            <dt class="col-sm-4">
+                CAMA
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.BedId)
+            </dd>
+            <dt class="col-sm-4">
+                PACIENTE
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.PatientName)
+            </dd>
+            <dt class="col-sm-4">
+                MOTIVO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Reason)
+            </dd>
+            <dt class="col-sm-4">
+                ESTADO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.State)
+            </dd>
+            <dt class="col-sm-4">
+                DOCTOR
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.DoctorName)
+            </dd>
+            <dt class="col-sm-4">
+                ANOTACIONES
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Annotations)
+            </dd>
+            <dt class="col-sm-4">
+                FECHA INICIO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+            <dt class="col-sm-4">
+                FECHA FIN
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <hr />
+        <div class="detailTitle">
+            CAMA
+        </div>        
+        <dl class="row">
+            <dt class="col-sm-4">
+                ID
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Bed.Id)
+            </dd>
+            <dt class="col-sm-4">
+                TAMAÑO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Bed.Size)
+            </dd>
+            <dt class="col-sm-4">
+                ANOTACIONES
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Bed.Annotations)
+            </dd>
+            <dt class="col-sm-4">
+                UBICACIÓN
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Bed.AreaSucursalName)
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <hr />
+        <div class="detailTitle">
+            PACIENTE
+        </div>        
+        <dl class="row">
+            <dt class="col-sm-4">
+                DPI
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Patient.Dpi)
+            </dd>
+            <dt class="col-sm-4">
+                NOMBRE
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Patient.Name)
+            </dd>
+            <dt class="col-sm-4">
+                APELLIDO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Patient.Lastname)
+            </dd>
+            <dt class="col-sm-4">
+                FECHA DE NACIMIENTO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Patient.Birthdate)
+            </dd>
+            <dt class="col-sm-4">
+                OBSERVACIONES
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Patient.Observations)
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <hr />
+        <div class="detailTitle">
+            DOCTOR
+        </div>        
+        <dl class="row">
+            <dt class="col-sm-4">
+                NO. COLEGIADO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Doctor.CollegiateNumber)
+            </dd>
+            <dt class="col-sm-4">
+                DPI
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Doctor.Dpi)
+            </dd>
+            <dt class="col-sm-4">
+                NOMBRE
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Doctor.Name)
+            </dd>
+            <dt class="col-sm-4">
+                APELLIDO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Doctor.Lastname)
+            </dd>
+            <dt class="col-sm-4">
+                FECHA DE NACIMIENTO
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Doctor.Birthdate)
+            </dd>
+            <dt class="col-sm-4">
+                ESPECIALIDAD
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Doctor.SpecialtyName)
+            </dd>
+        </dl>
+    </div>
+
+    <hr />
+    <div>
+        <a asp-action="Index">
+            <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px;" />
+        </a>
+    </div>
+</div>
+
+<style type="text/css">
+    .title {
+        font-size: 50px;
+        font-weight: bold;
+    }
+</style>

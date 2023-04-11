@@ -5,13 +5,6 @@ namespace HGS.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpGet]
         public IActionResult Index()
         {
@@ -52,16 +45,20 @@ namespace HGS.Controllers
                 Lastname = "ABC"
             };
 
-            HGSModel.GeneralResult generalResult = await APIService.DoctorExists(aDoctor);
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult?>.DoctorExists(aDoctor);
 
-            if (generalResult.Message != null)
+            if (generalResult != null)
             {
-                if (generalResult.Message.Equals("Correct"))
+                if (generalResult.Message != null)
                 {
-                    return View("Index");
+                    if (generalResult.Message.Equals("Correct"))
+                    {
+                        return View("Index");
+                    }
+                    @ViewData["Response"] = generalResult.Message;
                 }
-                @ViewData["Response"] = generalResult.Message;
             }
+
             return View();
         }
 
@@ -69,6 +66,6 @@ namespace HGS.Controllers
         public IActionResult About()
         {
             return View();
-        }
+        }        
     }
 }
