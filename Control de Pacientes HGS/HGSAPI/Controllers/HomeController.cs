@@ -1,4 +1,6 @@
 ﻿using HGSAPI.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +12,7 @@ namespace HGSAPI.Controllers
     {
         private readonly HgsContext _context = new();
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("DoctorExists")]
         [HttpPost]
         public async Task<HGSModel.GeneralResult> DoctorExists(HGSModel.Doctor doctor)

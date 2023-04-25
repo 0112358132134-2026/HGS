@@ -8,7 +8,7 @@ namespace HGS.Services
         private static readonly int timeout = 30;
         private static readonly string baseurl = "https://localhost/HGSAPI/";
         
-        public static async Task<IEnumerable<T>?> GetList(string route)
+        public static async Task<IEnumerable<T>?> GetList(string route, string accessToken)
         {
             HttpClientHandler clientHandler = new()
             {
@@ -19,6 +19,8 @@ namespace HGS.Services
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
+
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             HttpResponseMessage response = await httpClient.GetAsync(baseurl + route);
 
@@ -32,7 +34,7 @@ namespace HGS.Services
             }
         }
 
-        public static async Task<HGSModel.GeneralResult?> Set(object object_to_serialize, string route)
+        public static async Task<HGSModel.GeneralResult?> Set(object object_to_serialize, string route, string accessToken)
         {
             var json_ = JsonConvert.SerializeObject(object_to_serialize);
             var content = new StringContent(json_, Encoding.UTF8, "application/json");
@@ -46,6 +48,8 @@ namespace HGS.Services
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
+
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             HttpResponseMessage response = await httpClient.PostAsync(baseurl + route, content);
 
@@ -59,7 +63,7 @@ namespace HGS.Services
             };
         }
 
-        public static async Task<T?> Get(int id, string route)
+        public static async Task<T?> Get(int id, string route, string accessToken)
         {
             HttpClientHandler clientHandler = new()
             {
@@ -70,6 +74,8 @@ namespace HGS.Services
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
+
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             var response = await httpClient.GetAsync(baseurl + route + id);
 
@@ -83,7 +89,7 @@ namespace HGS.Services
             }
         }
 
-        public static async Task<HGSModel.GeneralResult?> Update(object object_to_serialize, string route)
+        public static async Task<HGSModel.GeneralResult?> Update(object object_to_serialize, string route, string accessToken)
         {
             var json_ = JsonConvert.SerializeObject(object_to_serialize);
             var content = new StringContent(json_, Encoding.UTF8, "application/json");
@@ -98,6 +104,8 @@ namespace HGS.Services
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
 
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+
             var response = await httpClient.PutAsync(baseurl + route, content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -110,7 +118,7 @@ namespace HGS.Services
             };
         }
 
-        public static async Task<T?> SpecialGet(string route)
+        public static async Task<T?> SpecialGet(string route, string accessToken)
         {
             HttpClientHandler clientHandler = new()
             {
@@ -121,6 +129,8 @@ namespace HGS.Services
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
+
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             HttpResponseMessage response = await httpClient.GetAsync(baseurl + route);
 
@@ -135,7 +145,7 @@ namespace HGS.Services
         }
 
         #region Bedpatient
-        public static async Task<T?> GetBPDSet(object object_to_serialize, string route)
+        public static async Task<T?> GetBPDSet(object object_to_serialize, string route, string accessToken)
         {
             var json_ = JsonConvert.SerializeObject(object_to_serialize);
             var content = new StringContent(json_, Encoding.UTF8, "application/json");
@@ -149,6 +159,8 @@ namespace HGS.Services
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
+
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             HttpResponseMessage response = await httpClient.PostAsync(baseurl + route, content);
 
@@ -164,7 +176,7 @@ namespace HGS.Services
         #endregion
 
         #region Home
-        public static async Task<HGSModel.GeneralResult?> DoctorExists(HGSModel.Doctor object_to_serialize)
+        public static async Task<HGSModel.GeneralResult?> DoctorExists(HGSModel.Doctor object_to_serialize, string accessToken)
         {
             var json_ = JsonConvert.SerializeObject(object_to_serialize);
             var content = new StringContent(json_, Encoding.UTF8, "application/json");
@@ -179,6 +191,8 @@ namespace HGS.Services
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
 
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+
             HttpResponseMessage response = await httpClient.PostAsync(baseurl + "Home/DoctorExists", content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -191,5 +205,32 @@ namespace HGS.Services
             };
         }
         #endregion
+
+        public static async Task<HGSModel.Token?> LoginAPILogin(HGSModel.Token object_to_serialize)
+        {
+            var json_ = JsonConvert.SerializeObject(object_to_serialize);
+            var content = new StringContent(json_, Encoding.UTF8, "application/json");
+
+            HttpClientHandler clientHandler = new()
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+            };
+
+            HttpClient httpClient = new(clientHandler)
+            {
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            HttpResponseMessage response = await httpClient.PostAsync(baseurl + "LoginAPI/Login", content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<HGSModel.Token>(await response.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                throw new Exception(response.StatusCode.ToString());
+            }
+        }
     }
 }

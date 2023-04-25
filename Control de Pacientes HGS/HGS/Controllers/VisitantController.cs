@@ -14,7 +14,21 @@ namespace HGS.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string dpi)
         {
-            IEnumerable<Models.Patient>? patients = await APIService<Models.Patient>.GetList("Patient/GetList");
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+
+            IEnumerable<Models.Patient>? patients = await APIService<Models.Patient>.GetList("Patient/GetList", token._token);
 
             HGSModel.Patient? patient = (from p in patients
                                          where p.Dpi == dpi
@@ -29,7 +43,7 @@ namespace HGS.Controllers
 
             if (patient != null)
             {
-                IEnumerable<HGSModel.Bedpatient>? bedpatients = await APIService<HGSModel.Bedpatient>.GetList("Bedpatient/GetList");
+                IEnumerable<HGSModel.Bedpatient>? bedpatients = await APIService<HGSModel.Bedpatient>.GetList("Bedpatient/GetList", token._token);
                 bedpatients = bedpatients?.Where(bp => bp.PatientId == patient.Id);
 
                 @ViewData["Response"] = "NoDating";
@@ -48,13 +62,27 @@ namespace HGS.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            HGSModel.Bedpatient? bedpatient = await APIService<HGSModel.Bedpatient>.Get(id, "Bedpatient/Get/");
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+
+            HGSModel.Bedpatient? bedpatient = await APIService<HGSModel.Bedpatient>.Get(id, "Bedpatient/Get/", token._token);
 
             if (bedpatient != null)
             {
-                HGSModel.Bed? bed = await APIService<HGSModel.Bed>.Get(bedpatient.BedId, "Bed/Get/");
-                HGSModel.Patient? patient = await APIService<HGSModel.Patient>.Get(bedpatient.PatientId, "Patient/Get/");
-                HGSModel.Doctor? doctor = await APIService<HGSModel.Doctor>.Get(bedpatient.DoctorId, "Doctor/Get/");
+                HGSModel.Bed? bed = await APIService<HGSModel.Bed>.Get(bedpatient.BedId, "Bed/Get/", token._token);
+                HGSModel.Patient? patient = await APIService<HGSModel.Patient>.Get(bedpatient.PatientId, "Patient/Get/", token._token);
+                HGSModel.Doctor? doctor = await APIService<HGSModel.Doctor>.Get(bedpatient.DoctorId, "Doctor/Get/", token._token);
 
                 bedpatient.Bed = bed;
                 bedpatient.Patient = patient;

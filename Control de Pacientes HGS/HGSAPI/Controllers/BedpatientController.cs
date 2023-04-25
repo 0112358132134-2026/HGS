@@ -1,4 +1,6 @@
 ﻿using HGSAPI.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ namespace HGSAPI.Controllers
     {
         private readonly HgsContext _context = new();
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("GetList")]
         [HttpGet]
         public async Task<IEnumerable<HGSModel.Bedpatient>> GetList()
@@ -37,6 +40,7 @@ namespace HGSAPI.Controllers
             return bedpatients;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("GetBPD")]
         [HttpGet]
         public async Task<HGSModel.Bedpatient> GetBPD()
@@ -122,6 +126,7 @@ namespace HGSAPI.Controllers
             return bedpatient;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("GetBPDSet")]
         [HttpPost]
         public async Task<HGSModel.Bedpatient> GetBPDSet(HGSModel.Bedpatient aBedpatient)
@@ -207,6 +212,7 @@ namespace HGSAPI.Controllers
             return bedpatient;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("Set")]
         [HttpPost]
         public async Task<HGSModel.GeneralResult> Set(HGSModel.Bedpatient newBedpatient)
@@ -255,6 +261,7 @@ namespace HGSAPI.Controllers
             return generalResult;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("Get/{id}")]
         [HttpGet]
         public async Task<HGSModel.Bedpatient> Get(int id)
@@ -325,6 +332,7 @@ namespace HGSAPI.Controllers
             return bedpatient;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("Update")]
         [HttpPut]
         public async Task<HGSModel.GeneralResult> Update(HGSModel.Bedpatient updatedBedpatient)

@@ -1,14 +1,30 @@
 ﻿using HGS.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HGS.Controllers
 {
     public class PatientController : Controller
     {
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> List(string tosearch, string optionSearch)
-        {
-            IEnumerable<HGSModel.Patient>? patients = await APIService<HGSModel.Patient>.GetList("Patient/GetList");
+        {            
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+            
+            IEnumerable<HGSModel.Patient>? patients = await APIService<HGSModel.Patient>.GetList("Patient/GetList", token._token);
 
             if (tosearch != null)
             {
@@ -28,6 +44,7 @@ namespace HGS.Controllers
             return View(patients);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -37,7 +54,21 @@ namespace HGS.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Dpi", "Name", "Lastname", "Birthdate", "Observations")] HGSModel.Patient newPatient)
         {
-            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Set(newPatient, "Patient/Set");
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Set(newPatient, "Patient/Set", token._token);
 
             if(generalResult != null)
             {
@@ -47,17 +78,46 @@ namespace HGS.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            HGSModel.Patient? patient = await APIService<HGSModel.Patient>.Get(id, "Patient/Get/");
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+
+            HGSModel.Patient? patient = await APIService<HGSModel.Patient>.Get(id, "Patient/Get/", token._token);
             return View(patient);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit([Bind("Id", "Dpi", "Name", "Lastname", "Birthdate", "Observations")] HGSModel.Patient updatedPatient)
         {
-            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Update(updatedPatient, "Patient/Update");
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult>.Update(updatedPatient, "Patient/Update", token._token);
 
             if(generalResult != null)
             {
@@ -67,10 +127,25 @@ namespace HGS.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            HGSModel.Patient? patient = await APIService<HGSModel.Patient>.Get(id, "Patient/Get/");
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+
+            HGSModel.Patient? patient = await APIService<HGSModel.Patient>.Get(id, "Patient/Get/", token._token);
             return View(patient);
         }
     }

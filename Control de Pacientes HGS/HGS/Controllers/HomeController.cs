@@ -1,10 +1,15 @@
 ﻿using HGS.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HGS.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,6 +29,18 @@ namespace HGS.Controllers
             {
                 if (username.Equals("ADMINISTRADOR_HGS") && password.Equals("#HGS_20234dMin"))
                 {
+                    // Seguridad
+                    var claims = new List<Claim>
+                    {
+                        new Claim("username", username),
+                        new Claim(ClaimTypes.NameIdentifier, "1234")
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    await HttpContext.SignInAsync(claimsPrincipal);
+                    //
+
                     return View("Index");
                 }
                 else
@@ -45,7 +62,21 @@ namespace HGS.Controllers
                 Lastname = "ABC"
             };
 
-            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult?>.DoctorExists(aDoctor);
+            HGSModel.Token? token = await APIService<HGSModel.Token>.LoginAPILogin(
+                new HGSModel.Token
+                {
+                    _token = "AUF){whU8:nUvg6=ce4k5y=qGed(#&"
+                });
+
+            if (token != null)
+            {
+                if (string.IsNullOrEmpty(token._token))
+                {
+                    return NotFound();
+                }
+            }
+
+            HGSModel.GeneralResult? generalResult = await APIService<HGSModel.GeneralResult?>.DoctorExists(aDoctor, token._token);
 
             if (generalResult != null)
             {
@@ -54,6 +85,19 @@ namespace HGS.Controllers
                     if (generalResult.Message.Equals("Correct"))
                     {
                         int id = generalResult.Id;
+
+                        // Seguridad
+                        var claims = new List<Claim>
+                        {
+                            new Claim("username", username),
+                            new Claim(ClaimTypes.NameIdentifier, "1234")
+                        };
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                        await HttpContext.SignInAsync(claimsPrincipal);
+                        //
+
                         return RedirectToAction("Index", "Appointment", new { id });
                     }
                     @ViewData["Response"] = generalResult.Message;
@@ -67,6 +111,13 @@ namespace HGS.Controllers
         public IActionResult About()
         {
             return View();
-        }        
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Json(new { success = true });
+        }
     }
 }

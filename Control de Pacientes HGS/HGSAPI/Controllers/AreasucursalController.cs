@@ -1,4 +1,6 @@
 ﻿using HGSAPI.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ namespace HGSAPI.Controllers
     {
         private readonly HgsContext _context = new();
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("GetList")]
         [HttpGet]
         public async Task<IEnumerable<HGSModel.Areasucursal>> GetList()
@@ -30,6 +33,7 @@ namespace HGSAPI.Controllers
             return areasucursals;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("GetAB")]
         [HttpGet]
         public async Task<HGSModel.Areasucursal> GetAB()
@@ -65,6 +69,7 @@ namespace HGSAPI.Controllers
             return areasucursal;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("Set")]
         [HttpPost]
         public async Task<HGSModel.GeneralResult> Set(HGSModel.Areasucursal newAreasucursal)
@@ -96,6 +101,7 @@ namespace HGSAPI.Controllers
             return generalResult;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("Get/{id}")]
         [HttpGet]
         public async Task<HGSModel.Areasucursal> Get(int id)
@@ -143,6 +149,7 @@ namespace HGSAPI.Controllers
             return areasucursal;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("Update")]
         [HttpPut]
         public async Task<HGSModel.GeneralResult> Update(HGSModel.Areasucursal updatedAreasucursal)
