@@ -27,6 +27,7 @@ namespace HGSAPI.Controllers
                      PatientName = p.Name + " " + p.Lastname,
                      Reason = BP.Reason,
                      State = BP.State,
+                     DoctorId = BP.DoctorId,
                      DoctorName = d.Name + " " + d.Lastname,
                      Annotations = BP.Annotations,
                      StartDate = BP.StartDate,
@@ -322,6 +323,53 @@ namespace HGSAPI.Controllers
             }).ToList();
 
             return bedpatient;
+        }
+
+        [Route("Update")]
+        [HttpPut]
+        public async Task<HGSModel.GeneralResult> Update(HGSModel.Bedpatient updatedBedpatient)
+        {
+            HGSModel.GeneralResult generalResult = new()
+            {
+                Message = "Unsuccessfully"
+            };
+
+            try
+            {
+                var bedpatient = await _context.Bedpatients.FindAsync(updatedBedpatient.Id);
+                if (bedpatient != null)
+                {
+                    if (updatedBedpatient.Annotations != "")
+                    {
+                        bedpatient.Annotations += " | " + updatedBedpatient.Annotations;
+                    }                    
+                    bedpatient.State = updatedBedpatient.State;
+                    bedpatient.EndDate = updatedBedpatient.EndDate;
+
+                    _context.Bedpatients.Update(bedpatient);
+                    await _context.SaveChangesAsync();
+
+                    // Si dio de baja al paciente, hay que desocupar la cama
+                    if (bedpatient.State)
+                    {
+                        var bed = await _context.Beds.FindAsync(bedpatient.BedId);
+
+                        if (bed != null)
+                        {
+                            bed.State = false;                            
+                            _context.Beds.Update(bed);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+
+                    generalResult.Message = "Success";
+                }
+            }
+            catch (Exception)
+            {
+                generalResult.Message = "Error";
+            }
+            return generalResult;
         }
     }
 }

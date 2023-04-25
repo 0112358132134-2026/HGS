@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HGS.Models;
+﻿namespace HGS.Models;
 
 public partial class Administrator
 {

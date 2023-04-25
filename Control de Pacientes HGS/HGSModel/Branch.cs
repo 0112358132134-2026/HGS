@@ -6,7 +6,7 @@ namespace HGSModel
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Ingrese el nombre del Municipio")]
+        [Required(ErrorMessage = "Ingrese el nombre de la Sucursal")]
         public string Municipality { get; set; } = null!;
     }
 }

@@ -1,5 +1,5 @@
 ﻿body {
-    background-image: url("../images/general/visitant.jpg");
+    background-image: url("../images/general/appointment.jpg");
     background-size: cover;
 }
 
@@ -13,37 +13,22 @@
     margin-bottom: 30px;
 }
 
-.searchContainer {
-    background-color: #b80f22;
-    padding: 30px;
-    width: 500px;    
-    color: #FFF;
-    text-align: center;
-}
-
-.control-label {
-    font-weight: bold;    
-    font-size: 30px;
-}
-
-.warning-message {
-    color: #000;
-}
-
 .item {
-    background: #FFF;
+    background: rgba(255, 255, 255, 0.5);
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 30px;
 }
 
-.PatientMetadata {
+.DoctorMetadata {
     font-weight: bold;
     font-size: 30px;
     margin-bottom: 30px;
     border-bottom: 5px solid #000;
     border-top: 5px solid #000;
     text-align: center;
+    background: #b80f22;
+    color: #FFF;   
 }
 
 .detailTitle {

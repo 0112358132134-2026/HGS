@@ -24,18 +24,20 @@ namespace HGSAPI.Controllers
                  where D.User == doctor.User
                  select new HGSModel.Doctor
                  {
+                     Id = D.Id,
                      User = D.User,
                      Password = D.Password
                  }).FirstOrDefaultAsync();
 
             if (_doctor == null)
-            {
+            {                
                 return generalResult;
             }
 
             if (_doctor.Password.Equals(doctor.Password))
             {
                 generalResult.Message = "Correct";
+                generalResult.Id = _doctor.Id;
                 return generalResult;
             }
 

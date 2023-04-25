@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using HGSModel;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace HGS.Models;
 
@@ -11,8 +8,7 @@ public partial class HgsContext : DbContext
     {
     }
 
-    public HgsContext(DbContextOptions<HgsContext> options)
-        : base(options)
+    public HgsContext(DbContextOptions<HgsContext> options) : base(options)
     {
     }
 
@@ -43,7 +39,11 @@ public partial class HgsContext : DbContext
                         .AddJsonFile("appsettings.json")
                         .Build();
             var connectionString = configuration.GetConnectionString("hgs");
-            optionsBuilder.UseMySQL(connectionString);
+
+            if (connectionString != null)
+            {
+                optionsBuilder.UseMySQL(connectionString);
+            }
         }
     }
 

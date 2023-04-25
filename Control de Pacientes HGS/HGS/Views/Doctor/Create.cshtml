@@ -16,12 +16,7 @@
                     <label asp-for="CollegiateNumber" class="control-label">NÚMERO DE COLEGIADO</label>
                     <input asp-for="CollegiateNumber" placeholder="Ingrese número de colegiado del doctor" class="form-control" />
                     <span asp-validation-for="CollegiateNumber" class="warning-message"></span>
-                </div>
-                @*<div class="form-group mt-3">
-                    <label asp-for="User" class="control-label">USUARIO</label>
-                    <input asp-for="User" placeholder="Ingrese nombre de usuario del doctor" class="form-control" />
-                    <span asp-validation-for="User" class="warning-message"></span>
-                </div>*@
+                </div>                
                 <div class="form-group mt-3">
                     <label asp-for="Password" class="control-label">CONTRASEÑA</label>
                     <input asp-for="Password" type="password" placeholder="Ingrese contraseña del doctor" class="form-control" />
@@ -65,10 +60,11 @@
 
     <div class="col" style="flex-direction:column;padding: 30px;">
         <div class="information">
-            Acá puede agregar un paciente al sistema. En el espacio de
-            "observaciones" puedes añadir algún aspecto que se considere relevante conocer acerca
-            del paciente (Ej. Padece de dolores de cabeza, hipertensión). Si deseas saber si el paciente ya está
-            en el sistema, puedes dar click en el botón "Regresar".
+            Acá puede agregar un Doctor. Cada Doctor del hospital HGS debe tener una cuenta en el Sistema
+            para que se le puedan asignar Pacientes y pueda llevar un control de ellos. Debe definir una
+            contraseña para el usuario del Doctor (el usuario se generará automáticamente). <b>Solamente
+                comparta el usuario y contraseña con el Doctor correspondiente.
+            </b>
         </div>
         <div>
             <a asp-action="List">

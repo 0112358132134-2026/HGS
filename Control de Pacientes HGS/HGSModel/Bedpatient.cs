@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace HGSModel
 {
@@ -10,6 +11,7 @@ namespace HGSModel
 
         public int PatientId { get; set; }
 
+        [Required(ErrorMessage = "Ingrese el motivo de la cita")]
         public string Reason { get; set; } = null!;
 
         public bool State { get; set; }

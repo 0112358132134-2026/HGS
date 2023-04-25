@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HGSAPI.Models;
+﻿namespace HGSAPI.Models;
 
 public partial class Doctor
 {

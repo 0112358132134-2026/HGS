@@ -2,10 +2,10 @@
 @model HGSModel.Areasucursal
 
 @{
-    ViewData["Title"] = "Añadir Área Sucursal";
+    ViewData["Title"] = "Añadir Ubicación";
 }
 
-<div class="title">ASOCIAR UN ÁREA A UNA SUCURSAL</div>
+<div class="title">AÑADIR UBICACIÓN</div>
 
 <div class="row">
     <div class="col">
@@ -21,15 +21,16 @@
                     <select asp-for="BranchId" class ="select" asp-items="@Model.Branches"></select>
                 </div>
                 <div class="form-group d-grid gap-2 mt-3">
-                    <input type="submit" value="Añadir Areasucrusal" class="btn btn-light" />
+                    <input type="submit" value="Añadir Ubicación" class="btn btn-light" />
                 </div>
             </form>
         </div>        
     </div>
     <div class="col" style="flex-direction:column;padding: 30px;">
         <div class="information">
-            Una sucursal puede tener diferentes áreas. Acá puedes añadir las áreas que deseas
-            a una sucrusal en específico.
+            Acá puede agregar una Ubicación. Una Ubicación asocia un Área a una Sucursal
+            del Hospital HGS (Ej. Pediatría Petén - Significa que en la Sucursal de Petén
+            existe un Área de Pediatría).
         </div>
         <div>
             <a asp-action="List">

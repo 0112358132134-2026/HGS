@@ -10,20 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HGS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/visitant.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/appointment.css" asp-append-version="true" />
     <link rel="icon" href="~/logo.ico" type="image/x-icon">
 </head>
 
 <div class="container">
 
     <div class="title">DETALLES DE LA CITA</div>
-    <div>        
-        <a asp-route-id="" asp-action="Index">
-            <input type="submit" value="↻ Regresar" class="btn btn-dark" style="width:200px; margin-bottom: 30px;" />
-        </a>
-    </div>
 
-    <div class="item">        
+    <div class="item">
+        
         <div class="detailTitle">
             CITA
         </div>
@@ -79,10 +75,12 @@
         </dl>
     </div>
 
-    <div class="item">        
+    <div class="item">
+        
         <div class="detailTitle">
             CAMA
-        </div>        
+        </div>
+
         <dl class="row">
             <dt class="col-sm-4">
                 ID
@@ -111,10 +109,11 @@
         </dl>
     </div>
 
-    <div class="item">       
+    <div class="item">
+        
         <div class="detailTitle">
             PACIENTE
-        </div>        
+        </div>
         <dl class="row">
             <dt class="col-sm-4">
                 DPI
@@ -149,10 +148,11 @@
         </dl>
     </div>
 
-    <div class="item">        
+    <div class="item">
+        
         <div class="detailTitle">
             DOCTOR
-        </div>        
+        </div>
         <dl class="row">
             <dt class="col-sm-4">
                 NO. COLEGIADO
@@ -191,11 +191,13 @@
                 @Html.DisplayFor(model => model.Doctor.SpecialtyName)
             </dd>
         </dl>
-    </div>     
+    </div>
+  
 </div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<style type="text/css">
+    .title {
+        font-size: 50px;
+        font-weight: bold;
     }
-}
+</style>

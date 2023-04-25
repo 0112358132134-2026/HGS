@@ -53,7 +53,8 @@ namespace HGS.Controllers
                 {
                     if (generalResult.Message.Equals("Correct"))
                     {
-                        return View("Index");
+                        int id = generalResult.Id;
+                        return RedirectToAction("Index", "Appointment", new { id });
                     }
                     @ViewData["Response"] = generalResult.Message;
                 }

@@ -2,10 +2,10 @@
 @model HGSModel.Bedpatient
 
 @{
-    ViewData["Title"] = "Añadir Cama Paciente";
+    ViewData["Title"] = "Añadir Cita";
 }
 
-<div class="title">AÑADIR CAMA PACIENTE</div>
+<div class="title">AÑADIR CITA</div>
 
 <div class="row">
     <div class="col">
@@ -45,7 +45,9 @@
 
     <div class="col" style="flex-direction:column;padding: 30px;">
         <div class="information">
-            Una Cama Paciente...
+            Acá puede agregar una Cita. Debe asignar una Cama al Paciente que necesite
+            la Cita, así como el Doctor que lo atenderá  y el motivo por el cual el Paciente
+            necesita ser atendido.
         </div>
         <div>
             <a asp-action="List">
